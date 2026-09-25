@@ -1,0 +1,1582 @@
+/* ==========================================================================
+   Avory Travel — Landing page dịch vụ visa
+   Nạp SAU about.css và dùng lại toàn bộ hệ thống của trang Về Avory:
+   token màu, container 1280px, --section-gap 170px, .h2/.lead, .btn,
+   nav, footer và kiểu thẻ (viền --card-border, bo --radius-lg,
+   bóng --shadow-card, hover nhấc 8px + --shadow-lift + viền cam).
+   File này chỉ thêm phần riêng của landing page.
+   ========================================================================== */
+
+/* --------------------------------------------------------------------------
+   0. Bổ sung cho thành phần dùng chung
+   -------------------------------------------------------------------------- */
+.btn--ghost {
+  padding: 10px 22px;
+  border: 1px solid var(--white-60);
+  color: var(--white);
+}
+.btn--ghost:hover { background: var(--white-12); }
+.btn--lg.btn--ghost { padding: 13px 28px; }
+
+.btn--outline {
+  padding: 10px 24px;
+  border: 1px solid rgba(13, 81, 72, .3);
+  color: var(--green);
+}
+.btn--outline:hover { background: var(--mint); border-color: var(--green); }
+.btn--lg.btn--outline { padding: 13px 30px; }
+
+/* Ký hiệu tiền treo lên cao, dùng chung cho thẻ điểm đến và bảng giá.
+   Dùng chữ "đ" (gạch ngang thân) chứ không phải "₫" (U+20AB) — ký tự ₫ có sẵn
+   một vạch dưới chân, treo lên trông y như bị gạch chân.
+   line-height: 0 để nó không nống chiều cao dòng lên khi vertical-align đẩy
+   lên trên. */
+.cur {
+  font-size: .52em;
+  line-height: 0;
+  vertical-align: super;
+  text-decoration: none;
+}
+
+/* --------------------------------------------------------------------------
+   1. Nav của landing page — thêm hotline + CTA vào thanh nav sẵn có
+   -------------------------------------------------------------------------- */
+.nav--lp { position: sticky; top: 0; z-index: 40; box-shadow: var(--shadow-card); }
+
+/* Mục nav đang xem do JS gắn aria-current="location" (base.css chỉ bắt
+   "page" của markup tĩnh) — bắt cả hai để lúc nào cũng có gạch chân. */
+.nav--lp .nav__menu a { transition: color .25s ease, border-bottom-color .25s ease; }
+.nav--lp .nav__menu a[aria-current] { border-bottom-color: var(--orange); }
+
+/* Mép trên mục dừng dưới thanh nav dính, không bị nó che khi bấm vào tab.
+   Giá trị này phải NHỎ hơn vạch mốc trong JS (chiều cao nav + 24). */
+#dich-vu,
+#bang-gia,
+#quy-trinh,
+#kien-thuc,
+#lien-he { scroll-margin-top: 80px; }
+
+.nav__hotline {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--green);
+  white-space: nowrap;
+}
+.nav__hotline svg {
+  width: 18px; height: 18px;
+  flex: none;
+  fill: none;
+  stroke: var(--orange);
+  stroke-width: 1.8;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+.nav__cta { flex: none; }
+
+/* --------------------------------------------------------------------------
+   2. Hero — chữ bên trái, form tư vấn bên phải
+   -------------------------------------------------------------------------- */
+.vhero {
+  position: relative;
+  /* Chiều cao hero KHOÁ theo bề ngang ở màn rộng. Để nội dung tự quyết (628px)
+     thì màn càng rộng khung càng dẹt — 1345px là 2,12:1 còn 1920px đã 3,06:1 —
+     mà ảnh nguồn 16:9, "cover" sẽ cắt dọc tới 42%, mất chóp Eiffel lẫn bánh
+     vali. Khoá ở 1/2,12 thì tỉ lệ khung đứng yên, cắt như nhau ở mọi bề ngang.
+     Chặn 880px để màn siêu rộng không đội hero cao quá một màn hình. */
+  min-height: min(47vw, 880px);
+  /* min-height thôi thì chưa đủ: .vhero là khối thường nên nội dung vẫn dính
+     mép trên, phần cao dôi ra dồn hết xuống đáy — ở màn 2560px là 336px trống
+     dưới form mà chỉ 76px trên. Cho nó thành grid rồi align-content: center
+     để chỗ dôi chia đều hai đầu. Ảnh nền và lớp phủ đặt tuyệt đối nên không
+     bị tính là ô lưới. */
+  display: grid;
+  align-content: center;
+  padding: 76px 0 84px;
+  overflow: hidden;
+  isolation: isolate;
+  background: var(--green);
+}
+.vhero__bg {
+  position: absolute;
+  inset: 0;
+  z-index: -2;
+  width: 100%; height: 100%;
+  object-fit: cover;
+  /* Dải chủ thể của ảnh ghép nằm từ y=60 (chóp Eiffel) tới y=1000 (bánh vali)
+     trên khung cao 1125 — 84% chiều cao, gần như không còn lề an toàn. Ở tỉ lệ
+     2,12:1 khung hiện được 945px, vừa đủ chứa 940px đó, nhưng phải neo lệch
+     lên: 33% đặt cửa sổ vào đúng y=60..1005. Để 50% là cụt chóp Eiffel. */
+  object-position: 50% 33%;
+}
+.vhero::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  /* Đậm ở nửa trái nơi có chữ, nhạt hẳn về phải nơi không có chữ — nhờ vậy
+     vali, mũ và tháp Eiffel còn ra màu mà dòng phụ vẫn đọc được.
+
+     Mốc chặn là dòng phụ 17px màu --white-80 (cần 4,5:1). Ảnh ghép sáng hơn
+     ảnh chụp cũ nhiều: giữ nguyên bộ số cũ (.76/.69/.50) chỉ còn 4,31:1, tụt
+     dưới AA. Đo lại trên chính vùng chữ ở 5 bề ngang với bộ số này:
+     1030px 5,40 · 1100px 4,87 · 1280px 5,36 · 1440px 5,35 · 1920px 5,83.
+     Chỗ ngặt nhất là 1100px, nơi khung 1,73:1 hiện gần trọn ảnh nên mảng
+     trời sáng lọt đúng vào sau dòng chữ. */
+  background:
+    linear-gradient(96deg,
+      rgba(10, 44, 39, .80) 0%,
+      rgba(10, 44, 39, .77) 48%,
+      rgba(10, 44, 39, .42) 68%,
+      rgba(13, 81, 72, .26) 100%);
+}
+
+.vhero__grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 480px);
+  gap: 56px;
+  align-items: center;
+}
+
+.vhero__title {
+  /* Bỏ nhãn eyebrow rồi thì h1 là phần tử đầu tiên của cột chữ — giữ
+     margin-top cũ sẽ đẩy cả khối lệch xuống so với cột form bên phải. */
+  margin-top: 0;
+  font-size: 52px;
+  font-weight: 800;
+  line-height: 1.14;
+  /* Viết hoa bằng CSS chứ không sửa chữ trong markup: giữ nguyên chữ thường
+     trong HTML để trình đọc màn hình đọc thành câu, không đánh vần từng chữ.
+     Chữ hoa cần nới tracking — mức -.01em vốn dành cho chữ thường sẽ chật. */
+  text-transform: uppercase;
+  letter-spacing: .012em;
+  color: var(--white);
+}
+.vhero__sub {
+  margin-top: 20px;
+  max-width: 560px;
+  font-size: 17px;
+  line-height: 1.75;
+  color: var(--white-80);
+}
+/* Vế in đậm kéo lên trắng đặc: chữ 80% mà tô đậm thì trông xám bẩn chứ không
+   nổi lên, trên nền ảnh lại càng khó đọc. */
+.vhero__sub strong { font-weight: 700; color: var(--white); }
+.vhero__cta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 14px;
+  margin-top: 32px;
+}
+
+/* --------------------------------------------------------------------------
+   3. Form tư vấn — dùng chung cho hero và cuối trang
+   -------------------------------------------------------------------------- */
+.vform {
+  padding: 30px 28px 32px;
+  border: 1px solid transparent;
+  border-radius: var(--radius-lg);
+  background: var(--white);
+  box-shadow: var(--shadow-float);
+}
+.vform__title {
+  font-size: 20px;
+  font-weight: 800;
+  line-height: 1.35;
+  color: var(--green);
+}
+.vform__grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 14px;
+  margin-top: 22px;
+}
+.vform--hero .vform__grid { margin-top: 20px; }
+
+.field { display: grid; gap: 6px; }
+.field--full { grid-column: 1 / -1; }
+.field label {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--green);
+}
+.field abbr { color: var(--orange); text-decoration: none; }
+
+.field input,
+.field select,
+.field textarea {
+  width: 100%;
+  padding: 11px 13px;
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-md);
+  background: var(--page-bg);
+  color: var(--primary);
+  font: inherit;
+  font-size: 14.5px;
+  transition: border-color .2s ease, background-color .2s ease;
+}
+.field textarea { resize: vertical; min-height: 62px; }
+.field input:focus,
+.field select:focus,
+.field textarea:focus { background: var(--white); border-color: var(--green-bright); }
+.field ::placeholder { color: var(--muted); }
+
+.field--check {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  margin-top: 16px;
+}
+.field--check input { width: 17px; height: 17px; margin-top: 2px; flex: none; accent-color: var(--orange); }
+.field--check label { font-size: 13.5px; font-weight: 400; color: var(--text-medium); }
+.field--check a { color: var(--green); text-decoration: underline; }
+
+/* Nút này trải hết bề ngang form, khác mọi nút khác vốn co theo nội dung.
+   space-between đẩy chữ về sát lề trái và khối tròn mũi tên về sát lề phải
+   của khung, thay vì dồn cả cụm vào giữa. Hai mép chính là padding của
+   .btn--lg: 26px bên trái, 13px bên phải. */
+.vform__submit { width: 100%; justify-content: space-between; margin-top: 20px; }
+
+/* --------------------------------------------------------------------------
+   4. Dải cam kết ngay dưới hero
+   -------------------------------------------------------------------------- */
+.trust { background: var(--white); border-bottom: 1px solid var(--card-border); }
+.trust__list {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 20px;
+  padding-block: 34px;
+}
+.trust__list li {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 14px;
+  /* cỡ chữ bằng tiêu đề thẻ "Visa Du lịch" (.pcard h3, 18px) cho dải này
+     nặng ký hơn; giữ 700 chứ không lên 800 vì đây vẫn là dải phụ. */
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--green);
+  text-align: left;
+}
+.trust__list li + li { border-left: 1px solid var(--card-border); }
+.trust__list svg {
+  width: 30px; height: 30px;
+  flex: none;
+  fill: none;
+  stroke: var(--orange);
+  stroke-width: 1.6;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+/* --------------------------------------------------------------------------
+   5. Mục đích chuyến đi — 5 thẻ
+   -------------------------------------------------------------------------- */
+/* Mục ngay dưới dải cam kết lấy khoảng cách hẹp hơn nhịp chung: dải đó là
+   một băng trắng có viền, để nguyên 170px thì hở một mảng trống lớn. Gắn theo
+   VỊ TRÍ (.trust + section) chứ không theo tên mục, để còn đảo thứ tự các mục
+   mà không phải sửa lại. Chọn lọc (0,1,1) nên thắng .dest/.purpose (0,1,0). */
+.trust + section { padding-top: 110px; }
+.purpose { padding-top: var(--section-gap); }
+.purpose .h2 { margin-top: 0; }
+.purpose__sub,
+.dest__sub,
+.pricing__sub,
+.posts__sub {
+  max-width: 680px;
+  margin-inline: auto;
+  text-align: center;
+}
+
+.purpose__grid {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 20px;
+  margin-top: 46px;
+  align-items: stretch;
+}
+
+/* cùng công thức thẻ với .pillar của trang Về Avory, chỉ gọn hơn cho 5 cột */
+.pcard {
+  display: flex;
+  flex-direction: column;
+  padding: 28px 22px 26px;
+  border: 1px solid transparent;
+  border-radius: var(--radius-lg);
+  background: var(--white);
+  box-shadow: var(--shadow-card);
+  transition: transform .4s var(--ease-out),
+              box-shadow .4s var(--ease-out),
+              border-color .3s ease,
+              background-color .3s ease;
+}
+/* chữ đổi màu cùng nhịp với nền khi rê chuột */
+.pcard h3,
+.pcard > p,
+.pcard__more { transition: color .3s ease; }
+/* Icon đặc màu cam, bỏ hẳn đĩa tròn nền phía sau. Hình đã vẽ lại theo kiểu
+   fill (xem index.html) — tô màu hình nét mảnh cũ sẽ ra vệt loang chứ không
+   thành icon đặc, nên phải thay hình chứ không đổi mỗi thuộc tính CSS. */
+.pcard__ico {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 42px; height: 42px;
+  flex: none;
+}
+.pcard__ico svg {
+  width: 100%; height: 100%;
+  fill: var(--orange);
+  stroke: none;
+  transition: fill .35s ease, transform .5s var(--ease-back);
+}
+.pcard h3 {
+  margin-top: 20px;
+  font-size: 18px;
+  font-weight: 800;
+  line-height: 1.35;
+  color: var(--green);
+}
+.pcard > p {
+  margin-top: 10px;
+  font-size: 14.4px;
+  line-height: 1.7;
+  color: var(--text-medium);
+}
+.pcard__more {
+  margin-top: auto;
+  padding-top: 18px;
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--orange);
+}
+.pcard--accent { border-color: rgba(243, 120, 87, .45); background: #fff7f4; }
+
+/* --------------------------------------------------------------------------
+   6. Điểm đến — thẻ Schengen lớn + 5 thẻ nhỏ
+   -------------------------------------------------------------------------- */
+.dest { padding-top: var(--section-gap); }
+.dest .h2 { margin-top: 0; }
+
+/* Flex thay vì grid: mọi thẻ thường có cùng một bề rộng (1/3 hàng), nên hàng cuối
+   chỉ có 2 thẻ vẫn giữ đúng kích thước của hàng 3 thẻ phía trên và tự căn giữa
+   nhờ justify-content — không cần chỉ định cột thủ công cho từng thẻ. */
+.dest__grid {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: stretch;
+  gap: 28px;
+  margin-top: 46px;
+}
+.dcard { flex: 0 1 calc((100% - 56px) / 3); }
+
+/* Hàng cuối chỉ còn 2 thẻ. Cho mỗi thẻ đúng nửa hàng thay vì giữ bề ngang 1/3
+   rồi dồn vào giữa — hàng dưới nhờ vậy trải kín bằng đúng hàng trên.
+   Chỉ áp từ 1025px lên: từ 1024px xuống lưới đã là 2 cột, quy tắc này sẽ đá
+   nhau với .dcard { flex-basis } trong media query (chọn lọc thấp hơn nên
+   không đè lại được). */
+@media (min-width: 1025px) {
+  .dcard:nth-last-child(-n + 2) { flex-basis: calc((100% - 28px) / 2); }
+}
+
+.dcard {
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  border: 1px solid transparent;
+  border-radius: var(--radius-lg);
+  background: var(--white);
+  box-shadow: var(--shadow-card);
+  transition: transform .4s var(--ease-out),
+              box-shadow .4s var(--ease-out),
+              border-color .3s ease;
+}
+
+/* thẻ chủ lực trải hết bề ngang, ảnh bên trái — chữ bên phải */
+.dcard--hero {
+  flex: 0 0 100%;
+  flex-direction: row;
+  border-color: rgba(243, 120, 87, .45);
+}
+.dcard--hero .dcard__media { width: 34%; flex: none; aspect-ratio: auto; }
+.dcard--hero .dcard__body { padding: 34px 34px 32px; }
+.dcard--hero h3 { font-size: 26px; max-width: 620px; }
+
+/* Nút "Xem chi tiết" ở 5 thẻ nhỏ: cùng kiểu với thẻ chủ lực nhưng thu gọn.
+   Cỡ mặc định cao 48px, đặt trong thẻ rộng 397px thì nặng nề so với thẻ lớn. */
+.btn--sm {
+  gap: 8px;
+  padding: 7px 7px 7px 16px;
+  font-size: 13.2px;
+}
+.btn--sm .btn__dot { width: 24px; height: 24px; }
+.btn--sm .btn__dot svg { width: 13px; height: 13px; }
+
+/* ô ảnh điểm đến. Nền xanh chỉ còn là lớp lót lúc ảnh chưa tải xong. */
+.dcard__media {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  aspect-ratio: 16 / 9;
+  background: linear-gradient(150deg, var(--green) 0%, var(--green-deep) 100%);
+  color: var(--white);
+  overflow: hidden;
+}
+.dcard__media img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform .6s var(--ease-out);
+}
+
+/* Huy hiệu "17 quốc gia" trên thẻ chủ lực. Nền đặc chứ không phải lớp phủ cả
+   khung: muốn chữ trắng đủ tương phản trên vùng trời sáng của ảnh thì lớp phủ
+   phải tối tới ~70%, tối đến vậy thì thêm ảnh cũng bằng thừa. */
+.dcard__badge {
+  position: absolute;
+  left: 18px;
+  bottom: 18px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  padding: 10px 16px 12px;
+  border-radius: var(--radius-md);
+  background: rgba(6, 48, 42, .86);
+  backdrop-filter: blur(2px);
+}
+.dcard__mark {
+  font-size: 40px;
+  font-weight: 800;
+  letter-spacing: .04em;
+  line-height: 1;
+}
+.dcard--hero .dcard__mark { font-size: 44px; }
+.dcard__markSub {
+  margin-top: 4px;
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: .18em;
+  text-transform: uppercase;
+  color: var(--white-70);
+}
+.dcard__body {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  padding: 24px 24px 26px;
+}
+/* Nhãn + tiêu đề gộp thành một khối để rê chuột tô được cả mảng. Margin âm
+   kéo khối ra sát mép thẻ, padding bù lại đúng bằng ngần ấy nên chữ không xê
+   dịch — chỉ khi tô màu mới thấy dải chạy hết bề ngang thẻ. */
+.dcard__head {
+  position: relative;
+  margin: -24px -24px 0;
+}
+.dcard__headIn { padding: 24px 24px 16px; }
+
+/* Cú quét trái → phải trong .3s.
+   Hai bản chữ chồng khít nhau: bản dưới chữ xanh trên nền thẻ, bản trên chữ
+   TRẮNG trên nền cam và bị cắt bằng clip-path. Mép cắt chạy sang phải sẽ để lộ
+   đồng thời cả nền cam lẫn chữ trắng, nên chữ đổi màu đúng khoảnh khắc mép cam
+   chạm tới — không thể làm được bằng transition màu chữ, vì màu chữ đổi cho cả
+   dòng cùng lúc chứ không đổi theo từng đoạn mà mép vừa đi qua. */
+.dcard__headIn--fill {
+  position: absolute;
+  inset: 0;
+  background: var(--orange);
+  clip-path: inset(0 100% 0 0);
+  transition: clip-path .3s ease-in-out;
+}
+/* .dcard h3 nằm sau trong file và cùng độ ưu tiên (0,1,1) nên thắng —
+   phải thêm một lớp .dcard vào bộ chọn mới đè được. */
+.dcard .dcard__headIn--fill .dcard__flag,
+.dcard .dcard__headIn--fill h3 { color: var(--white); }
+
+.dcard--hero .dcard__head { margin: -34px -34px 0; }
+.dcard--hero .dcard__headIn { padding: 34px 34px 16px; }
+
+/* padding-bottom của khối đã lo khoảng cách, bỏ margin-top của phần kế tiếp */
+.dcard__head + * { margin-top: 0; }
+
+.dcard__flag {
+  font-size: 11.5px;
+  font-weight: 700;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+  color: var(--orange);
+}
+.dcard h3 {
+  margin-top: 10px;
+  font-size: 19px;
+  font-weight: 800;
+  line-height: 1.3;
+  color: var(--green);
+}
+.dcard__note {
+  margin-top: 14px;
+  font-size: 13.6px;
+  line-height: 1.75;
+  color: var(--text-medium);
+}
+
+/* thẻ chủ lực: thông số bên trái, danh sách "đã bao gồm" bên phải */
+.dcard__split {
+  display: grid;
+  grid-template-columns: minmax(0, 260px) minmax(0, 1fr);
+  gap: 16px 40px;
+  margin-top: 20px;
+}
+.dcard__split .dcard__meta { margin-top: 0; }
+
+/* Không đệm trên: đầu danh sách phải bắt ngang đúng dòng "Loại visa" của cột
+   trái. padding-top 10px trước đây đẩy cả cụm tụt xuống, nhìn như bị lệch. */
+.dcard__incl { display: grid; gap: 9px; align-content: start; }
+.dcard__incl li {
+  position: relative;
+  padding-left: 27px;
+  font-size: 14px;
+  line-height: 1.6;
+  color: var(--text-medium);
+}
+.dcard__incl li::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 2px;
+  width: 18px; height: 18px;
+  border-radius: 50%;
+  background: var(--mint)
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23f37857' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m5 12 5 5L19 7'/%3E%3C/svg%3E")
+    center / 11px no-repeat;
+}
+
+/* Không còn vạch kẻ ngăn giữa các mục. Khoảng cách cũ là 10px gap + 10px
+   padding của vạch, nên gộp lại thành gap 20px và đẩy margin-top lên 26px để
+   nhịp dọc giữ y như trước. */
+.dcard__meta { margin-top: 26px; display: grid; gap: 20px; }
+.dcard__meta div {
+  display: grid;
+  gap: 3px;
+}
+.dcard__meta dt {
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: .04em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+.dcard__meta dd {
+  margin: 0;
+  font-size: 14.4px;
+  font-weight: 600;
+  color: var(--primary);
+}
+
+.dcard__foot {
+  display: flex;
+  /* Nút canh theo ĐÁY khối giá chứ không canh giữa: khối giá cao hai dòng
+     (nhãn "Từ" + số tiền) nên canh giữa làm nút nổi lên lơ lửng giữa hai dòng. */
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 14px;
+  margin-top: auto;
+  padding-top: 20px;
+}
+.dcard__price small {
+  display: block;
+  font-size: 12px;
+  color: var(--muted);
+}
+.dcard__price b {
+  display: block;
+  margin-top: 2px;
+  font-size: 21px;
+  font-weight: 800;
+  color: var(--orange);
+}
+.dcard--hero .dcard__price b { font-size: 30px; }
+
+/* --------------------------------------------------------------------------
+   7. Bảng giá
+   -------------------------------------------------------------------------- */
+.pricing { padding-top: var(--section-gap); }
+.pricing .h2 { margin-top: 0; }
+
+.pricing__card {
+  margin-top: 46px;
+  padding: 12px 12px 30px;
+  border: 1px solid transparent;
+  border-radius: var(--radius-lg);
+  background: var(--white);
+  box-shadow: var(--shadow-card);
+}
+.pricing__scroll { overflow-x: auto; }
+
+/* Bảng giá rộng hơn màn hình điện thoại nên phải cuộn ngang; cột "Giá trọn gói"
+   nằm ngoài khung nhìn nên cần một dòng gợi ý, chỉ hiện ở mốc mobile. */
+.pricing__hint {
+  display: none;
+  margin: 0 0 12px;
+  font-size: 13px;
+  color: var(--orange-dark);
+  font-weight: 600;
+}
+
+.ptable {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 14.4px;
+  min-width: 720px;
+}
+.ptable th,
+.ptable td {
+  padding: 15px 18px;
+  text-align: left;
+  vertical-align: top;
+  border-bottom: 1px solid var(--card-border);
+}
+.ptable thead th {
+  position: sticky;
+  top: 0;
+  /* Rule dùng chung phía trên kẻ border-bottom cho MỌI th và td, gồm cả hàng
+     tiêu đề. Hàng tiêu đề đã có nền --mint bo góc riêng nên không cần vạch
+     ngăn nữa — bỏ đi cho sạch. Các hàng thân bảng vẫn giữ vạch. */
+  border-bottom: 0;
+  background: var(--mint);
+  font-size: 12.5px;
+  font-weight: 700;
+  letter-spacing: .06em;
+  text-transform: uppercase;
+  color: var(--green);
+  white-space: nowrap;
+}
+.ptable thead th:first-child { border-radius: var(--radius-md) 0 0 var(--radius-md); }
+.ptable thead th:last-child  { border-radius: 0 var(--radius-md) var(--radius-md) 0; }
+.ptable tbody th {
+  font-weight: 600;
+  color: var(--text-medium);
+  white-space: nowrap;
+}
+.ptable td { color: var(--text-medium); }
+.ptable td small { display: block; margin-top: 3px; font-size: 12.5px; color: var(--muted); }
+.ptable .num { text-align: right; font-weight: 800; color: var(--green); white-space: nowrap; }
+.ptable tbody tr:last-child th,
+.ptable tbody tr:last-child td { border-bottom: 0; }
+
+.pricing__legal {
+  margin: 22px 18px 0;
+  padding-left: 14px;
+  border-left: 3px solid var(--orange);
+  font-size: 13.4px;
+  line-height: 1.75;
+  color: var(--text-medium);
+}
+.pricing__cta { margin: 24px 18px 0; }
+
+/* --------------------------------------------------------------------------
+   8. Vì sao chọn AVORY — 6 điểm
+   -------------------------------------------------------------------------- */
+.merits { padding-top: var(--section-gap); }
+.merits .h2 { margin-top: 0; }
+
+/* 6 thẻ chia đúng 2 hàng 3 cột, không còn hàng lẻ nên không cần flex căn giữa
+   nữa — và phải là grid: flex chỉ kéo các thẻ bằng nhau TRONG một hàng, hai
+   hàng vẫn cao thấp khác nhau. grid-auto-rows: 1fr ép mọi hàng bằng hàng cao
+   nhất. Lưu ý: nếu sau này số thẻ không chia hết cho số cột thì hàng cuối sẽ
+   dồn về trái, lúc đó mới cần quay lại flex. */
+.merits__grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-auto-rows: 1fr;
+  gap: 20px;
+  margin-top: 46px;
+}
+.merit {
+  padding: 26px 22px 24px;
+  border: 1px solid transparent;
+  border-radius: var(--radius-lg);
+  background: var(--white);
+  box-shadow: var(--shadow-card);
+  transition: transform .4s var(--ease-out),
+              box-shadow .4s var(--ease-out),
+              border-color .3s ease;
+}
+.merit__ico {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 48px; height: 48px;
+  border-radius: 50%;
+  background: var(--mint);
+  transition: background-color .35s ease;
+}
+.merit__ico svg {
+  width: 23px; height: 23px;
+  fill: none;
+  stroke: var(--orange);
+  stroke-width: 1.7;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  transition: stroke .35s ease;
+}
+.merit h3 {
+  margin-top: 18px;
+  font-size: 16.5px;
+  font-weight: 800;
+  line-height: 1.35;
+  color: var(--green);
+}
+.merit p {
+  margin-top: 8px;
+  font-size: 14px;
+  line-height: 1.7;
+  /* Câu dài nhất ("Tư vấn thêm không tính phí…") vốn tràn dòng đúng 1px ở khổ
+     rộng. Siết tracking 0,01em thu lại ~7px — mắt không thấy, mà câu về gọn
+     một dòng. */
+  letter-spacing: -.01em;
+  color: var(--text-medium);
+}
+
+/* --------------------------------------------------------------------------
+   9. Quy trình 5 bước — dải xanh
+   -------------------------------------------------------------------------- */
+.steps {
+  margin-top: var(--section-gap);
+  padding: 90px 0 96px;
+  background: var(--green);
+}
+.steps .h2 { margin-top: 0; }
+
+.steps__list {
+  position: relative;
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 24px;
+  margin-top: 54px;
+  list-style: none;
+  padding: 0;
+}
+/* đường nối ngang chạy qua tâm dãy số */
+.steps__list::before {
+  content: "";
+  position: absolute;
+  left: 10%;
+  right: 10%;
+  top: 27px;
+  height: 1px;
+  background: var(--white-20);
+}
+.step { position: relative; text-align: center; }
+.step__num {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 54px; height: 54px;
+  border: 1px solid var(--white-20);
+  border-radius: 50%;
+  background: var(--green-deep);
+  color: var(--white);
+  font-size: 16px;
+  font-weight: 800;
+  letter-spacing: .04em;
+}
+/* Chạy đèn qua 5 số: mỗi số sáng 2s, hết vòng 10s rồi lặp lại.
+   Một vòng = 10s nên mỗi số chiếm 20%; sáng từ 0–18%, tắt dần tới 24%, rồi
+   nằm im tới 94% và sáng dần trở lại đúng lúc vòng sau bắt đầu. */
+@keyframes stepGlow {
+  0%, 18%  { background: var(--orange);     border-color: var(--orange); }
+  24%, 94% { background: var(--green-deep); border-color: var(--white-20); }
+  100%     { background: var(--orange);     border-color: var(--orange); }
+}
+.step__num { animation: stepGlow 10s linear infinite; }
+
+/* Lệch pha 2s mỗi số. Dùng delay DƯƠNG chứ không âm, và KHÔNG đặt
+   animation-fill-mode: backwards — nếu không, số 2..5 sẽ hiện khung hình 0%
+   (đang sáng) ngay từ giây đầu, tức là cả 5 số cùng sáng lúc mới vào trang.
+   Để mặc định thì trước khi tới lượt, mỗi số giữ nguyên kiểu tĩnh (tối). */
+.step:nth-child(2) .step__num { animation-delay: 2s; }
+.step:nth-child(3) .step__num { animation-delay: 4s; }
+.step:nth-child(4) .step__num { animation-delay: 6s; }
+.step:nth-child(5) .step__num { animation-delay: 8s; }
+.step h3 {
+  margin-top: 20px;
+  font-size: 16.5px;
+  font-weight: 800;
+  line-height: 1.35;
+  color: var(--white);
+}
+.step p {
+  margin-top: 8px;
+  font-size: 14px;
+  line-height: 1.7;
+  color: var(--white-70);
+}
+
+/* --------------------------------------------------------------------------
+   10. Hồ sơ cần chuẩn bị — tab thuần CSS (radio + :checked)
+   -------------------------------------------------------------------------- */
+.docs { padding-top: var(--section-gap); }
+.docs .h2 { margin-top: 0; }
+
+/* 2/3 nội dung — 1/3 minh hoạ, đúng bố cục của ảnh tham khảo */
+.docs__layout {
+  display: grid;
+  grid-template-columns: minmax(0, 2fr) minmax(0, 1fr);
+  gap: 28px;
+  margin-top: 40px;
+  align-items: stretch;
+}
+
+.docs__tabs {
+  display: flex;
+  flex-direction: column;
+  padding: 4px 26px 26px;
+  border: 1px solid transparent;
+  border-radius: var(--radius-lg);
+  background: var(--white);
+  box-shadow: var(--shadow-card);
+}
+.docs__layout > input { position: absolute; opacity: 0; pointer-events: none; }
+
+/* Thanh tab kiểu gạch chân: một dải chữ có đường kẻ mảnh phía dưới, tab đang
+   chọn được tô đậm và gạch chân màu cam — thay cho nút viên thuốc trước đây. */
+.docs__nav {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 30px;
+  border-bottom: 1px solid var(--card-border);
+}
+.docs__nav label {
+  position: relative;
+  padding: 16px 2px 14px;
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--muted);
+  cursor: pointer;
+  white-space: nowrap;
+  transition: color .25s ease;
+}
+.docs__nav label::after {
+  content: "";
+  position: absolute;
+  left: 0; right: 0; bottom: -1px;
+  height: 3px;
+  border-radius: 3px 3px 0 0;
+  background: transparent;
+  transition: background-color .25s ease;
+}
+.docs__nav label:hover { color: var(--green); }
+
+/* Cả 4 bảng chồng lên cùng một ô lưới thay vì hiện/ẩn bằng display. Nhờ vậy ô
+   này luôn cao bằng bảng dài nhất (tab Du lịch, 7 mục) nên **đổi tab không làm
+   thay đổi chiều cao mục** — kéo theo khung minh hoạ bên phải cũng đứng yên. */
+.docs__panels {
+  display: grid;
+  margin-top: 22px;
+}
+
+/* Mỗi đầu mục là một thẻ riêng: icon + nhãn, viền trái đậm màu thương hiệu. */
+.docs__panel {
+  grid-area: 1 / 1;
+  align-self: start;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  /* 1fr cho hàng tự sinh: mọi thẻ cao bằng thẻ cao nhất (thẻ có ghi chú xuống dòng) */
+  grid-auto-rows: 1fr;
+  gap: 12px 16px;
+  visibility: hidden;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity .25s ease;
+}
+.docs__panel li {
+  display: flex;
+  align-items: center;
+  gap: 13px;
+  padding: 13px 16px;
+  /* Cao tối thiểu bằng đúng thẻ 2 dòng (3em chữ + 26px đệm + 2px viền), để thẻ ở
+     mọi tab đều một chiều cao — kể cả tab Du học không có nhãn nào xuống dòng. */
+  min-height: calc(3em + 28px);
+  border: 1px solid var(--card-border);
+  border-left: 3px solid var(--green);
+  border-radius: var(--radius-md);
+  background: var(--mint);
+  font-size: 14.6px;
+  font-weight: 600;
+  line-height: 1.5;
+  color: var(--primary);
+  transition: border-left-color .25s ease, background-color .25s ease;
+}
+.docs__panel li svg {
+  width: 21px; height: 21px;
+  flex: none;
+  fill: none;
+  stroke: var(--orange);
+  stroke-width: 1.6;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+.docs__panel em {
+  font-style: normal;
+  font-weight: 500;
+  color: var(--orange-dark);
+}
+
+/* nối radio ↔ nhãn ↔ bảng nội dung */
+#tab-tour:checked   ~ .docs__tabs .docs__nav label[for="tab-tour"],
+#tab-biz:checked    ~ .docs__tabs .docs__nav label[for="tab-biz"],
+#tab-family:checked ~ .docs__tabs .docs__nav label[for="tab-family"],
+#tab-study:checked  ~ .docs__tabs .docs__nav label[for="tab-study"] { color: var(--green); }
+
+#tab-tour:checked   ~ .docs__tabs .docs__nav label[for="tab-tour"]::after,
+#tab-biz:checked    ~ .docs__tabs .docs__nav label[for="tab-biz"]::after,
+#tab-family:checked ~ .docs__tabs .docs__nav label[for="tab-family"]::after,
+#tab-study:checked  ~ .docs__tabs .docs__nav label[for="tab-study"]::after { background: var(--orange); }
+
+/* minh hoạ tương ứng hiện lên, ba cái còn lại mờ đi */
+#tab-tour:checked   ~ .docs__art img[data-art="tour"],
+#tab-biz:checked    ~ .docs__art img[data-art="biz"],
+#tab-family:checked ~ .docs__art img[data-art="family"],
+#tab-study:checked  ~ .docs__art img[data-art="study"] { opacity: 1; }
+#tab-tour:checked   ~ .docs__tabs .docs__panels [data-panel="tour"],
+#tab-biz:checked    ~ .docs__tabs .docs__panels [data-panel="biz"],
+#tab-family:checked ~ .docs__tabs .docs__panels [data-panel="family"],
+#tab-study:checked  ~ .docs__tabs .docs__panels [data-panel="study"] {
+  visibility: visible;
+  opacity: 1;
+  pointer-events: auto;
+}
+
+/* Khung ảnh bên phải, dùng đúng công thức thẻ của cột trái. Ảnh tràn sát mép,
+   góc bo do chính khung cắt. */
+.docs__art {
+  position: relative;
+  margin: 0;
+  border: 1px solid transparent;
+  border-radius: var(--radius-lg);
+  background: var(--white);
+  box-shadow: var(--shadow-card);
+  overflow: hidden;
+}
+
+/* Bốn ảnh chồng lên nhau, đặt tuyệt đối vì hai lẽ: ảnh không được quyết định
+   chiều cao hàng (cột trái mới quyết định), và chồng lên nhau thì mới mờ chéo
+   được — ảnh cũ nhạt dần đúng lúc ảnh mới hiện lên. */
+.docs__art img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  /* Ảnh chụp phải phủ kín khung, không "contain" như hồi còn là tranh nét —
+     contain sẽ chừa dải trắng hai đầu. Ảnh gốc đã cắt vuông quanh chủ thể nên
+     khung gần vuông chỉ xén thêm ~6%; kéo lên 40% để ưu tiên giữ khuôn mặt. */
+  object-fit: cover;
+  object-position: 50% 40%;
+  opacity: 0;
+  transition: opacity .45s var(--ease-out);
+}
+
+/* --------------------------------------------------------------------------
+   11. Dải minh bạch
+   -------------------------------------------------------------------------- */
+/* Trước đây là một mục riêng chạy hết bề ngang trang. Nay nằm gọn cuối mục
+   "Hồ sơ cần chuẩn bị" nên thu về đúng bề rộng container và bo góc như thẻ. */
+.clarity {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+  margin-top: 28px;
+  padding: 26px 20px;
+  border-radius: var(--radius-lg);
+  /* Xanh lá thương hiệu. Nền đậm đã tách hẳn khỏi nền kem của trang nên không
+     cần viền như hồi thử nền nhạt. */
+  background: var(--green);
+}
+.clarity li {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  font-size: 15.5px;
+  font-weight: 600;
+  color: var(--white);
+}
+.clarity li + li { border-left: 1px solid var(--white-20); }
+.clarity svg {
+  width: 24px; height: 24px;
+  flex: none;
+  fill: none;
+  stroke: var(--orange);
+  stroke-width: 1.6;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+/* --------------------------------------------------------------------------
+   12. Kiến thức visa
+   -------------------------------------------------------------------------- */
+.posts { padding-top: var(--section-gap); }
+.posts .h2 { margin-top: 0; }
+
+.posts__grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24px;
+  margin-top: 46px;
+  align-items: stretch;
+}
+.post {
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  border: 1px solid transparent;
+  border-radius: var(--radius-lg);
+  background: var(--white);
+  box-shadow: var(--shadow-card);
+  transition: transform .4s var(--ease-out),
+              box-shadow .4s var(--ease-out),
+              border-color .3s ease;
+}
+/* Dải ảnh đầu thẻ. Nền xanh chỉ còn là lớp lót lúc ảnh chưa tải xong. */
+.post__thumb {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  aspect-ratio: 16 / 9;
+  background: linear-gradient(150deg, var(--green) 0%, var(--green-deep) 100%);
+  overflow: hidden;
+}
+.post__thumb img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform .6s var(--ease-out);
+}
+
+.post__body {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  padding: 22px 24px 24px;
+}
+
+.post__tag {
+  display: inline-block;
+  align-self: flex-start;
+  padding: 5px 12px;
+  border-radius: var(--radius-full);
+  background: var(--mint);
+  font-size: 11.5px;
+  font-weight: 700;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+  color: var(--green);
+}
+.post h3 {
+  margin-top: 16px;
+  font-size: 17px;
+  font-weight: 700;
+  line-height: 1.5;
+  color: var(--green);
+}
+.post__more {
+  margin-top: auto;
+  padding-top: 20px;
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--orange);
+}
+.posts__all { margin-top: 40px; text-align: center; }
+
+/* --------------------------------------------------------------------------
+   13. FAQ — <details> nên không cần JavaScript
+   -------------------------------------------------------------------------- */
+.faq { padding-top: var(--section-gap); }
+.faq .h2 { margin-top: 0; }
+
+.faq__grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 16px 28px;
+  margin-top: 46px;
+  align-content: start;
+}
+.qa {
+  align-self: start;
+  padding: 4px 22px;
+  border: 1px solid transparent;
+  border-radius: var(--radius-lg);
+  background: var(--white);
+  box-shadow: var(--shadow-card);
+  transition: border-color .3s ease, box-shadow .3s ease;
+}
+.qa[open] { border-color: rgba(243, 120, 87, .45); box-shadow: var(--shadow-soft); }
+.qa summary {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 18px 0;
+  font-size: 15.5px;
+  font-weight: 700;
+  line-height: 1.5;
+  color: var(--green);
+  cursor: pointer;
+  list-style: none;
+}
+.qa summary::-webkit-details-marker { display: none; }
+.qa summary::after {
+  content: "";
+  width: 22px; height: 22px;
+  flex: none;
+  margin-top: 1px;
+  border-radius: 50%;
+  background: var(--mint)
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23f37857' stroke-width='2.4' stroke-linecap='round'%3E%3Cpath d='M12 5v14M5 12h14'/%3E%3C/svg%3E")
+    center / 12px no-repeat;
+  transition: transform .3s var(--ease-out), background-color .3s ease;
+}
+.qa[open] summary::after {
+  transform: rotate(135deg);
+  background-color: #ffe6dd;
+}
+.qa > p {
+  margin: 0 0 18px;
+  padding-right: 38px;
+  font-size: 14.4px;
+  line-height: 1.8;
+  color: var(--text-medium);
+}
+.qa > p + p { margin-top: -6px; }
+.qa a { color: var(--green); text-decoration: underline; }
+
+/* câu trả lời còn chờ AVORY chốt chính sách */
+.qa__todo {
+  padding: 12px 14px;
+  border-radius: var(--radius-md);
+  background: #fff7f4;
+  color: var(--text-medium);
+}
+.qa__todo b { color: var(--orange-dark); }
+
+/* --------------------------------------------------------------------------
+   14. CTA cuối trang
+   -------------------------------------------------------------------------- */
+.finale {
+  position: relative;
+  margin-top: var(--section-gap);
+  padding: 92px 0 96px;
+  overflow: hidden;
+  isolation: isolate;
+  background: var(--green);
+}
+.finale__bg {
+  position: absolute;
+  inset: 0;
+  z-index: -2;
+  width: 100%; height: 100%;
+  object-fit: cover;
+  object-position: 50% 50%;
+}
+.finale::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background: linear-gradient(96deg, rgba(10, 44, 39, .95) 0%, rgba(10, 44, 39, .88) 48%, rgba(13, 81, 72, .7) 100%);
+}
+.finale__grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 560px);
+  gap: 56px;
+  align-items: center;
+}
+.finale__sub {
+  margin-top: 18px;
+  max-width: 420px;
+  font-size: 16.5px;
+  line-height: 1.75;
+  color: var(--white-80);
+}
+.finale__hotline {
+  display: inline-flex;
+  align-items: center;
+  gap: 14px;
+  margin-top: 30px;
+  padding: 12px 26px;
+  border-radius: var(--radius-full);
+  background: var(--orange);
+  color: var(--white);
+}
+.finale__hotline svg {
+  width: 26px; height: 26px;
+  flex: none;
+  fill: none;
+  stroke: var(--white);
+  stroke-width: 1.7;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+.finale__hotline small { display: block; font-size: 12px; font-weight: 500; }
+.finale__hotline b { display: block; font-size: 24px; font-weight: 800; letter-spacing: .5px; }
+
+/* footer đã có margin-top: var(--section-gap) từ about.css — bỏ đi vì
+   ngay trên nó là dải CTA nền xanh, không cần thêm khoảng trắng */
+.footer { margin-top: 0; }
+
+/* --------------------------------------------------------------------------
+   15. Nút nổi
+   -------------------------------------------------------------------------- */
+.floats {
+  position: fixed;
+  right: 18px;
+  bottom: 18px;
+  z-index: 50;
+  display: grid;
+  gap: 10px;
+}
+.float {
+  display: grid;
+  place-items: center;
+  width: 48px; height: 48px;
+  border-radius: 50%;
+  box-shadow: var(--shadow-float);
+  transition: transform .25s var(--ease-out);
+}
+.float svg {
+  width: 23px; height: 23px;
+  fill: none;
+  stroke: var(--white);
+  stroke-width: 1.8;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+.float--call { background: var(--orange); }
+.float--zalo { background: #0068ff; color: var(--white); font-size: 13px; font-weight: 800; }
+.float--msg  { background: var(--green); }
+
+/* --------------------------------------------------------------------------
+   16. Hover — chỉ trên thiết bị có chuột thật (giống trang Về Avory)
+
+   Mọi thẻ để viền 1px TRANSPARENT ở trạng thái thường: nhìn thì như không có
+   viền, nhưng kích thước vẫn tính đủ nên lúc hover chỉ tô màu viền lên, thẻ
+   không nhích một pixel nào.
+   -------------------------------------------------------------------------- */
+@media (hover: hover) and (pointer: fine) {
+  .pcard:hover,
+  .dcard:hover,
+  .merit:hover,
+  .post:hover {
+    transform: translateY(-8px);
+    border-color: rgba(243, 120, 87, .55);
+    box-shadow: var(--shadow-lift);
+  }
+  /* Thẻ mục đích: đổ nền xanh thương hiệu, chữ trắng, icon GIỮ NGUYÊN màu cam.
+     Viền phải đổi sang xanh luôn — rule dùng chung phía trên đặt viền cam, để
+     nguyên thì thành viền cam quanh nền xanh. */
+  .pcard:hover {
+    background: var(--green);
+    border-color: var(--green);
+  }
+  .pcard:hover h3,
+  .pcard:hover > p,
+  .pcard:hover .pcard__more { color: var(--white); }
+  .pcard:hover .pcard__ico svg { transform: scale(1.08); }
+  .dcard:hover .dcard__media img { transform: scale(1.05); }
+  .dcard:hover .dcard__headIn--fill { clip-path: inset(0 0 0 0); }
+  .post:hover .post__thumb img { transform: scale(1.05); }
+  .merit:hover .merit__ico { background: var(--orange); }
+  .merit:hover .merit__ico svg { stroke: var(--white); }
+  .post:hover h3 { color: var(--orange); }
+  .float:hover { transform: scale(1.08); }
+  .qa summary:hover { color: var(--orange); }
+}
+
+/* --------------------------------------------------------------------------
+   17. Responsive — theo đúng các mốc của trang Về Avory
+   -------------------------------------------------------------------------- */
+
+/* Màn rộng: hero cao tới 880px mà ruột vẫn giữ nhịp của khổ 1280px thì hai
+   khối chữ và form trông bé tẹo, trôi giữa một vùng trống lớn. Nới nhịp bên
+   trong để chúng cao lên tương xứng — form từ 468px lên ~560px, khối tiêu đề
+   từ 288px lên ~330px. Không đụng tới cỡ khung, chỉ giãn khoảng cách. */
+@media (min-width: 1500px) {
+  /* 56px chứ không to hơn: cột chữ rộng 712px, mà dòng "MINH BẠCH & TRỌN
+     GÓI" viết hoa cần 682px ở 56px và 730px ở 60px — quá là rơi chữ "GÓI"
+     xuống dòng thứ ba. */
+  .vhero__title { font-size: 56px; }
+  .vhero__sub   { margin-top: 28px; max-width: 620px; font-size: 18.5px; }
+  .vhero__cta   { margin-top: 44px; gap: 16px; }
+
+  /* Cả hai form (hero và cuối trang) cùng giãn, để hai chỗ không lệch mật độ */
+  .vform { padding: 40px 36px 42px; }
+  .vform__title { font-size: 23px; }
+  .vform__grid { gap: 22px; margin-top: 30px; }
+  .vform--hero .vform__grid { margin-top: 30px; }
+  .field { gap: 8px; }
+  .field label { font-size: 13.5px; }
+  .field input,
+  .field select,
+  .field textarea { padding: 14px 15px; font-size: 15px; }
+  .field--check { margin-top: 24px; }
+  .vform__submit { margin-top: 28px; }
+}
+@media (max-width: 1200px) {
+  .vhero__grid { gap: 40px; }
+  .vhero__title { font-size: 44px; }
+  .purpose__grid { grid-template-columns: repeat(3, 1fr); }
+  .dcard--hero .dcard__media { width: 34%; }
+  .dcard--hero .dcard__mark { font-size: 40px; }
+}
+
+@media (max-width: 1024px) {
+  /* Xếp dọc thì chữ trải hết bề ngang, tràn sang cả đầu phải của gradient
+     (alpha chỉ .50) nên dòng phụ tụt xuống 2,48:1. Ở các mốc này dùng lớp phủ
+     PHẲNG .72: đo được 4,63:1 ở 1024px và 5,08:1 ở 375px. Gradient chỉ hợp với
+     bố cục 2 cột, nơi chữ nằm gọn nửa trái. */
+  /* Xếp dọc thì hero cao vọt mà vẫn hẹp — 375px cho khung 0,31:1. "cover" ở đó
+     chỉ giữ được 17% bề ngang ảnh, mất sạch Nữ thần Tự do lẫn vali. Nên bỏ hẳn
+     lối phủ kín: ảnh về đúng dải 16:9 sát mép trên, phần hero còn lại là nền
+     xanh. Cách này KHÔNG cắt một pixel nào của ảnh, ở mọi bề ngang. */
+  .vhero { min-height: 0; }
+  .vhero__bg {
+    inset: 0 0 auto;
+    height: auto;
+    aspect-ratio: 16 / 9;
+    /* Mép dưới tan dần vào nền xanh thay vì cắt ngang một đường thẳng. Làm
+       bằng mask trên chính tấm ảnh, không phải bằng gradient của lớp phủ:
+       mốc % ăn theo chiều cao thật của dải nên luôn khớp, còn tính bằng vw
+       thì lệch đúng bằng bề rộng thanh cuộn. Chỉ mờ 12% cuối — vùng cỏ —
+       nên bánh vali ở 89% vẫn còn nguyên. */
+    -webkit-mask-image: linear-gradient(180deg, #000 88%, transparent 100%);
+            mask-image: linear-gradient(180deg, #000 88%, transparent 100%);
+  }
+  .vhero::after { background: rgba(10, 44, 39, .72); }
+
+  /* about.css ẩn .nav__actions từ 1024px xuống; ở landing page thì hotline và
+     nút CTA là đường chuyển đổi chính nên phải giữ lại, chỉ thu gọn. */
+  .nav--lp .nav__actions { display: flex; }
+  .nav__hotline span { display: none; }
+
+  .vhero { padding: 56px 0 64px; }
+  .vhero__grid { grid-template-columns: 1fr; gap: 36px; }
+  .vhero__title { font-size: 38px; }
+  .vhero__sub { max-width: none; }
+
+  .trust__list { grid-template-columns: repeat(2, 1fr); gap: 16px; }
+  .trust__list li:nth-child(odd) { border-left: 0; }
+  .trust__list li:nth-child(3) { border-left: 0; }
+
+  .trust + section { padding-top: 90px; }
+  .purpose__grid { grid-template-columns: repeat(2, 1fr); }
+
+  /* 2 thẻ một hàng; thẻ lẻ cuối vẫn tự căn giữa nhờ justify-content của lưới */
+  .dcard { flex-basis: calc((100% - 28px) / 2); }
+  .dcard--hero { flex: 0 0 100%; flex-direction: column; }
+  .dcard--hero .dcard__media { width: 100%; aspect-ratio: 21 / 8; }
+  .dcard__split { grid-template-columns: minmax(0, 220px) minmax(0, 1fr); gap: 14px 30px; }
+
+  .merits__grid { grid-template-columns: repeat(2, 1fr); }
+
+  /* Xếp dọc thì không còn cột nào quy định chiều cao hàng, mà ảnh lại đặt tuyệt
+     đối — khung phải tự có tỉ lệ. Dùng khung VUÔNG chặn bề ngang: khớp đúng tỉ
+     lệ ảnh gốc nên không xén thêm tí nào. Kéo dài hết 977px thành dải ngang thì
+     "cover" sẽ cắt mất đầu người. */
+  .docs__layout { grid-template-columns: 1fr; gap: 24px; }
+  .docs__art {
+    min-height: 0;
+    aspect-ratio: 1;
+    /* width: 100% là bắt buộc. margin-inline: auto huỷ mặc định "stretch" của
+       grid item, mà mọi ảnh bên trong đều position: absolute nên fit-content
+       bằng 0 — thiếu dòng này khung co lại còn đúng 2x2px (2px viền). */
+    width: 100%;
+    max-width: 420px;
+    margin-inline: auto;
+  }
+  .docs__tabs { padding: 4px 20px 22px; }
+
+  .steps__list { grid-template-columns: repeat(3, 1fr); gap: 32px 24px; }
+  .steps__list::before { display: none; }
+
+  .posts__grid { grid-template-columns: repeat(2, 1fr); }
+  .faq__grid { grid-template-columns: 1fr; }
+
+  .finale__grid { grid-template-columns: 1fr; gap: 36px; }
+  .finale__sub { max-width: none; }
+}
+
+@media (max-width: 760px) {
+  /* Dải ảnh thẻ chủ lực: tỉ lệ 21/8 kế thừa từ mốc 1024 chỉ còn 130px ở màn
+     375px — quá dẹt cho một tấm ảnh, lại còn phải chứa huy hiệu cao 80px. */
+  .dcard--hero .dcard__media { aspect-ratio: 16 / 9; }
+  .dcard__badge { left: 14px; bottom: 14px; padding: 8px 14px 10px; }
+  .nav--lp .nav__menu { display: none; }
+  .pricing__hint { display: block; }
+  .nav--lp .nav__actions { display: flex; }
+  .nav--lp .nav__inner { justify-content: space-between; }
+  .nav__cta { padding: 9px 9px 9px 18px; font-size: 13.5px; }
+
+  .vhero__title { font-size: 31px; }
+  .vhero__cta .btn { flex: 1 1 100%; justify-content: center; }
+
+  .vform { padding: 24px 20px 26px; }
+  .vform__grid { grid-template-columns: 1fr; }
+  .vform__title { font-size: 18px; }
+
+  /* 2 cột thay vì 1: bốn dòng xếp dọc chiếm gần hết một màn hình. Cột rộng
+     165px nên phải siết lại — icon 30->22px, khoảng cách 14->9px, chữ
+     18->13.5px — để nhãn dài nhất ("20+ quốc gia hỗ trợ") vẫn gọn một dòng. */
+  .trust__list {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 18px 12px;
+    padding-block: 24px;
+  }
+  .trust__list li {
+    justify-content: flex-start;
+    gap: 9px;
+    font-size: 13.5px;
+    border-left: 0 !important;
+  }
+  .trust__list svg { width: 22px; height: 22px; }
+
+  /* Câu mô tả mục: bỏ chỗ ngắt dòng cố định và hạ cỡ chữ để mỗi câu gói gọn
+     trong tối đa 3 dòng. Ở 16,5px kèm <br> thì mục "mục đích" ngốn 4 dòng. */
+  .brk { display: none; }
+  .purpose__sub,
+  .dest__sub,
+  .pricing__sub,
+  .posts__sub,
+  .finale__sub {
+    margin-top: 14px;
+    font-size: 14.5px;
+    line-height: 1.65;
+  }
+
+  .purpose__grid { grid-template-columns: 1fr; }
+
+  /* 3 · Thẻ mục đích: icon nằm cùng dòng với tiêu đề cho thẻ thấp xuống.
+     Lưới 2 cột — icon ở ô trái hàng 1, tiêu đề ô phải; đoạn mô tả và link
+     trải hết hai cột ở hàng dưới. */
+  .pcard {
+    display: grid;
+    grid-template-columns: auto minmax(0, 1fr);
+    align-items: center;
+    column-gap: 13px;
+    padding: 20px 18px 18px;
+  }
+  .pcard__ico { width: 34px; height: 34px; }
+  .pcard h3 { margin-top: 0; font-size: 16.5px; }
+  .pcard > p { grid-column: 1 / -1; margin-top: 12px; font-size: 14px; }
+  .pcard__more { grid-column: 1 / -1; padding-top: 12px; }
+
+  /* mỗi thẻ chiếm trọn hàng */
+  .dcard { flex-basis: 100%; }
+  .dcard--hero .dcard__body { padding: 26px 22px 24px; }
+  /* margin âm của khối tiêu đề phải bám đúng padding của thân thẻ ở từng mốc,
+     lệch một chút là chữ trong dải cam thụt ra so với phần còn lại. */
+  .dcard--hero .dcard__head { margin: -26px -22px 0; }
+  .dcard--hero .dcard__headIn { padding: 26px 22px 16px; }
+  .dcard--hero h3 { font-size: 21px; }
+  .dcard__split { grid-template-columns: 1fr; gap: 14px; }
+  .dcard--hero .dcard__price b { font-size: 25px; }
+  .dcard__foot { flex-wrap: wrap; }
+
+  .pricing__card { padding: 10px 10px 24px; }
+  .pricing__legal, .pricing__cta { margin-inline: 10px; }
+  /* Nhãn dài 320px mà lòng nút chỉ 220px, nên một dòng là bất khả thi ở cỡ
+     chữ còn đọc được (phải tụt xuống ~11px). Cho xuống 2 dòng, canh trái, mũi
+     tên dạt phải — cùng kiểu với nút gửi của form. */
+  .pricing__cta {
+    width: calc(100% - 20px);
+    justify-content: space-between;
+    white-space: normal;
+    text-align: left;
+    font-size: 14px;
+    line-height: 1.35;
+    padding: 14px 12px 14px 20px;
+  }
+  .pricing__cta .btn__dot { width: 26px; height: 26px; flex: none; }
+
+  .merits__grid { grid-template-columns: 1fr; }
+  /* cùng cách xếp như .pcard: icon và tiêu đề chung một dòng */
+  .merit {
+    display: grid;
+    grid-template-columns: auto minmax(0, 1fr);
+    align-items: center;
+    column-gap: 13px;
+    padding: 18px;
+  }
+  .merit__ico { width: 40px; height: 40px; }
+  .merit__ico svg { width: 20px; height: 20px; }
+  .merit h3 { margin-top: 0; font-size: 16px; }
+  .merit p { grid-column: 1 / -1; margin-top: 10px; }
+
+  .steps { padding: 70px 0 76px; }
+  .steps__list { grid-template-columns: 1fr; gap: 26px; text-align: left; }
+  .step { display: grid; grid-template-columns: 54px 1fr; gap: 4px 18px; text-align: left; }
+  .step__num { grid-row: span 2; }
+  .step h3 { margin-top: 6px; }
+  /* Chặn tách cụm cuối để chỗ xuống dòng rơi đúng trước nó: "… 30 phút /
+     làm việc.", "… mục đích / chuyến đi.", "… hoặc / Đại sứ quán.".
+     Chỉ bật ở mốc này — trên desktop cột rộng khác nên ngắt chỗ khác. */
+  .nb { white-space: nowrap; }
+
+  /* Bốn tab vừa khít 375px nếu siết khoảng cách; nowrap + cuộn ngang để chắc
+     chắn không xuống dòng làm gạch chân lệch khỏi đường kẻ. */
+  .docs__nav { flex-wrap: nowrap; overflow-x: auto; gap: 16px; scrollbar-width: none; }
+  .docs__nav::-webkit-scrollbar { display: none; }
+  .docs__nav label { padding: 14px 2px 12px; font-size: 13.5px; }
+  /* 1 cột: bảng dài nhất vẫn là Du lịch nên chiều cao mục tiếp tục do nó quyết định */
+  .docs__panel { grid-template-columns: 1fr; }
+  .docs__art { max-width: 340px; }
+
+  .clarity { grid-template-columns: 1fr; gap: 14px; padding: 22px 18px; }
+  /* xếp dọc thì bỏ vạch ngăn — phải dùng "li + li" cho khớp độ ưu tiên với
+     rule ở trên, viết ".clarity li" (0,1,1) sẽ thua (0,1,2) và vạch vẫn còn. */
+  .clarity li { justify-content: flex-start; }
+  .clarity li + li { border-left: 0; }
+
+  .posts__grid { grid-template-columns: 1fr; }
+
+  .finale { padding: 70px 0 76px; }
+  .qa { padding-inline: 18px; }
+  .qa > p { padding-right: 0; }
+
+  .floats { right: 12px; bottom: 12px; }
+  .float { width: 44px; height: 44px; }
+}
+
+@media (max-width: 480px) {
+  .vhero__title { font-size: 27px; }
+  .dcard--hero .dcard__mark { font-size: 34px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  /* base.css chỉ ép transition-duration, không đụng tới animation — phải tắt
+     hẳn vòng chạy đèn, giữ số đầu sáng để dãy số không trông như hỏng. */
+  .step__num { animation: none; }
+  .step:first-child .step__num { background: var(--orange); border-color: var(--orange); }
+
+  /* base.css đã ép transition-duration về .01ms nhưng KHÔNG đụng tới delay —
+     bỏ nốt độ trễ .4s, nếu không chữ vẫn xanh thêm gần nửa giây trên nền cam. */
+  .dcard__headIn--fill { transition: none; }
+
+  .docs__art img { transition: none; }
+  .dcard__media img, .post__thumb img { transition: none; }
+  .dcard:hover .dcard__media img,
+  .post:hover .post__thumb img { transform: none; }
+  .pcard:hover, .dcard:hover, .merit:hover, .post:hover, .float:hover { transform: none; }
+  .pcard:hover .pcard__ico svg { transform: none; }
+}

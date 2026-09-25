@@ -1,0 +1,1096 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Tour Châu Âu – New Zealand – Úc mùa lễ hội 2026 – 2027 | AVORY</title>
+<meta name="description" content="7 hành trình Châu Âu, New Zealand và Úc mùa lễ hội 2026 – 2027. Đã mở bán tour Noel &amp; Tết Nguyên Đán 2027, hỗ trợ hồ sơ visa từ A–Z, khách sạn 3-4★, bay cùng hãng uy tín.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<!-- Inter như index.html; thêm Dancing Script (chữ viết tay, có bộ ký tự tiếng
+     Việt) chỉ cho chú thích 3 ảnh polaroid ở hero — gộp chung một request. -->
+<link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@600;700&family=Inter:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,700;1,800&display=swap" rel="stylesheet">
+<!-- Dùng NGUYÊN hai file CSS của landing page visa (index.html) — không sửa gì.
+     chau-au.css chỉ thêm những thành phần trang này mới có: hero nhiều lớp,
+     thẻ form chồng hero, thẻ tour, panel khu vực, cam kết, dịch vụ tự túc. -->
+<link rel="stylesheet" href="base.css">
+<link rel="stylesheet" href="visa.css">
+<link rel="stylesheet" href="chau-au.css">
+</head>
+<body>
+
+<a class="skip-link" href="#main">Bỏ qua tới nội dung chính</a>
+
+<!-- ===================== NAV ===================== -->
+<header class="nav nav--lp">
+  <div class="container nav__inner">
+    <a class="nav__brand" href="https://avory.vn" aria-label="Avory Travel - trang chủ">
+      <img class="nav__logo" src="assets/logo-nav.png" alt="Avory Travel">
+    </a>
+
+    <!-- Menu theo file nội dung. "Hình ảnh thực tế" tạm bỏ vì mục đó chưa có
+         tư liệu (xem README); "Cẩm nang" trỏ tới mục hỏi đáp. -->
+    <nav aria-label="Chính">
+      <ul class="nav__menu">
+        <li><a href="https://avory.vn">Trang chủ</a></li>
+        <li><a href="#chau-au">Tour Châu Âu</a></li>
+        <li><a href="#dai-duong">Tour Châu Đại Dương</a></li>
+        <li><a href="#visa-dich-vu">Visa &amp; Dịch vụ</a></li>
+        <li><a href="#cam-nang">Cẩm nang</a></li>
+        <li><a href="#lien-he">Liên hệ</a></li>
+      </ul>
+    </nav>
+
+    <div class="nav__actions">
+      <a class="nav__hotline" href="tel:18008386">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2.1 4.2 2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1 1 .4 1.9.7 2.8a2 2 0 0 1-.5 2.1L8.1 9.9a16 16 0 0 0 6 6l1.3-1.2a2 2 0 0 1 2.1-.5c.9.3 1.8.6 2.8.7a2 2 0 0 1 1.7 2Z"/></svg>
+        <span>1800 8386</span>
+      </a>
+      <a class="btn btn--accent nav__cta" href="#dang-ky">
+        Nhận tư vấn ngay
+        <span class="btn__dot"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h13"/><path d="m12.5 6 6 6-6 6"/></svg></span>
+      </a>
+    </div>
+  </div>
+</header>
+
+<main id="main">
+
+  <!-- Hero + form tư vấn nằm chung một lưới .eintro để ảnh banner chạy từ đỉnh
+       hero xuống tới ĐÚNG giữa chiều cao thẻ form (thẻ chia đôi qua hai hàng
+       1fr bằng nhau — xem chau-au.css). Lớp phủ .eintro::before đặc màu nền ở
+       nửa trái để chữ dễ đọc, trong suốt dần sang phải để ảnh hiện rõ. -->
+  <div class="eintro">
+    <!-- Ảnh hero: thung lũng sông New Zealand — trời mây, dãy núi, rừng thông,
+         sông uốn khúc (lần sửa 31). Ảnh trọn khung, không cần bản cắt riêng.
+         ≤1024px (khung dọc, ảnh "cover" theo CHIỀU CAO) dùng thẳng bản gốc
+         2000px — bản theo bề ngang (sm/md) sẽ bị kéo giãn. Xem chau-au.css. -->
+    <picture class="eintro__pic">
+      <source media="(max-width: 1024px)" srcset="assets/hero-nz-valley.jpg">
+      <img class="eintro__bg" src="assets/hero-nz-valley.jpg"
+           srcset="assets/hero-nz-valley-sm.jpg 1000w,
+                   assets/hero-nz-valley-md.jpg 1600w,
+                   assets/hero-nz-valley.jpg 2000w"
+           sizes="100vw" width="2000" height="1378" fetchpriority="high" alt="">
+    </picture>
+
+  <!-- ===================== 1 · HERO ===================== -->
+  <section class="ehero" aria-labelledby="hero-title">
+    <!-- đường bay nét đứt trang trí, nằm dưới nội dung -->
+    <svg class="ehero__route" viewBox="0 0 90 470" aria-hidden="true">
+      <path d="M22 462C62 410 12 356 40 304s46-82 14-132S18 76 50 34"/>
+      <path class="plane" transform="translate(40 0) rotate(18 12 12)" d="M21 16v-2l-8-5V3.5a1.5 1.5 0 0 0-3 0V9l-8 5v2l8-2.5V19l-2 1.5V22l3.5-1 3.5 1v-1.5L13 19v-5.5l8 2.5Z"/>
+    </svg>
+
+    <div class="container ehero__grid">
+
+      <div class="ehero__copy">
+        <h1 class="ehero__title" id="hero-title">Chạm trời Âu,<br><span class="brand">sống trọn từng khoảnh khắc</span></h1>
+
+        <!-- đúng câu subheadline của file nội dung (dòng 8) -->
+        <p class="ehero__sub">
+          <strong>Châu Âu – New Zealand – Úc</strong> mùa lễ hội 2026 – 2027&nbsp;<span class="ehero__dot" aria-hidden="true">•</span>
+          <span class="ehero__subNote">Đã mở bán tour Noel &amp; Tết Nguyên Đán 2027</span>
+        </p>
+
+        <!-- ƯU ĐÃI ĐẶT SỚM — file nội dung ghi [CẦN AVORY XÁC NHẬN] và "NẾU CÓ".
+             Xoá nguyên khối <p class="ehero__offer"> nếu AVORY không có ưu đãi. -->
+        <p class="ehero__offer">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="8" width="18" height="4" rx="1"/><path d="M12 8v13M19 12v7a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2v-7"/><path d="M7.5 8a2.5 2.5 0 0 1 0-5C11 3 12 8 12 8s1-5 4.5-5a2.5 2.5 0 0 1 0 5"/></svg>
+          <b>Ưu đãi đặt sớm</b>
+          <span class="ehero__offerSep" aria-hidden="true"></span>
+          <span>[Cần AVORY xác nhận: tặng quà, giảm giá theo nhóm hoặc ưu đãi đặt cọc sớm]</span>
+        </p>
+
+        <!-- HÀNG CAM KẾT — TẠM ẨN (lần sửa 23, theo yêu cầu). CSS vẫn giữ nguyên
+             trong chau-au.css; muốn hiện lại chỉ cần bỏ cặp chú thích bọc khối
+             <ul> này. Hiện lại thì hero ≤1024px cao thêm, ảnh co giãn lại: phải
+             dò lại object-position của .eintro__bg (xem README lần sửa 22–23).
+        <ul class="ehero__perks">
+          <li>
+            <span class="ehero__perkIco"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M21 16v-2l-8-5V3.5a1.5 1.5 0 0 0-3 0V9l-8 5v2l8-2.5V19l-2 1.5V22l3.5-1 3.5 1v-1.5L13 19v-5.5l8 2.5Z"/></svg></span>
+            <span><b>Bay thẳng / hãng uy tín</b>Vietjet, Vietnam Airlines</span>
+          </li>
+          <li>
+            <span class="ehero__perkIco"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 18.4V8.6M3 12.6h13.6a4 4 0 0 1 4 4v1.8M3 18.4h17.6M6.6 9.4h3.2a1.8 1.8 0 0 1 0 3.2H6.6Z"/></svg></span>
+            <span><b>Khách sạn 3-4★</b>Tiêu chuẩn quốc tế</span>
+          </li>
+          <li>
+            <span class="ehero__perkIco"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8Z"/><path d="M14 3v5h5"/><path d="m9 14 2 2 4-4"/></svg></span>
+            <span><b>Hỗ trợ tối ưu</b>Hồ sơ Visa</span>
+          </li>
+        </ul>
+        -->
+
+        <div class="ehero__cta">
+          <a class="btn btn--accent btn--lg" href="tel:18008386">
+            Gọi hotline tư vấn ngay
+            <span class="btn__dot"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2.1 4.2 2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1 1 .4 1.9.7 2.8a2 2 0 0 1-.5 2.1L8.1 9.9a16 16 0 0 0 6 6l1.3-1.2a2 2 0 0 1 2.1-.5c.9.3 1.8.6 2.8.7a2 2 0 0 1 1.7 2Z"/></svg></span>
+          </a>
+          <a class="btn btn--outline btn--lg" href="#dang-ky">
+            Nhận lịch trình &amp; báo giá
+            <span class="btn__dot"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3.5" y="4.5" width="17" height="16" rx="2.5"/><path d="M3.5 9.5h17M8 2.5v4M16 2.5v4M7.5 13.5h3M13.5 13.5h3M7.5 17h3"/></svg></span>
+          </a>
+        </div>
+      </div>
+
+      <!-- Cột phải: cụm 3 ảnh polaroid xếp như ảnh tham khảo — New Zealand
+           (sau, trái), Úc (giữa, phải, to hơn), Iceland (trước, dưới trái,
+           ảnh ngang). Ảnh NZ và Iceland đang là ảnh giữ chỗ — thay file
+           assets/tour-nz.jpg, tour-iceland.jpg là xong, không sửa code.
+           Cả cụm trôi parallax khi cuộn — xem đoạn script cuối trang. -->
+      <div class="ehero__art">
+        <!-- Cụm 3 ảnh polaroid (tạm ẩn ở lần sửa 30, hiện lại ở lần sửa 33). -->
+        <div class="ehero__snaps" aria-hidden="true">
+          <figure class="snap snap--nz"><img src="assets/tour-nz.jpg" alt="" width="1400" height="933"><figcaption>New Zealand</figcaption></figure>
+          <figure class="snap snap--au"><img src="assets/dest-au.jpg" alt="" width="1000" height="563"><figcaption>Úc</figcaption></figure>
+          <figure class="snap snap--is"><img src="assets/tour-iceland.jpg" alt="" width="1400" height="934"><figcaption>Iceland</figcaption></figure>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ===================== 2 · FORM TƯ VẤN NHANH (chồng lên mép dưới hero) ===================== -->
+  <section class="booking" id="dang-ky" aria-labelledby="booking-title">
+    <div class="container">
+      <div class="booking__card">
+
+        <!-- Cột trái: ảnh phủ kín + lớp phủ xanh, chữ trắng nằm ở đáy — cùng
+             công thức với hero của index.html. -->
+        <div class="booking__intro">
+          <img class="booking__bg" src="assets/booking-hague.jpg" alt="" width="1015" height="889" loading="lazy">
+          <h2 class="booking__title" id="booking-title">Nhận lịch trình &amp; báo giá chi tiết</h2>
+          <p class="booking__sub">Hỗ trợ làm Visa Châu Âu – Úc – New Zealand trọn gói &amp; uy tín.</p>
+          <ul class="booking__notes">
+            <li>
+              <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="4.5" y="10" width="15" height="10" rx="2"/><path d="M8 10V7a4 4 0 0 1 8 0v3M12 14v2.5"/></svg>
+              Thông tin của bạn được bảo mật tuyệt đối
+            </li>
+            <li>
+              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2.1 4.2 2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1 1 .4 1.9.7 2.8a2 2 0 0 1-.5 2.1L8.1 9.9a16 16 0 0 0 6 6l1.3-1.2a2 2 0 0 1 2.1-.5c.9.3 1.8.6 2.8.7a2 2 0 0 1 1.7 2Z"/></svg>
+              <span>Hoặc gọi <a href="tel:18008386">1800 8386</a> · miễn phí 24/7</span>
+            </li>
+          </ul>
+        </div>
+
+        <form class="booking__form" novalidate>
+          <fieldset class="seg">
+            <legend class="sr-only">Điểm khởi hành</legend>
+            <input type="radio" name="depart" id="dep-hn" value="Hà Nội" checked>
+            <label for="dep-hn">Khởi hành từ Hà Nội</label>
+            <input type="radio" name="depart" id="dep-hcm" value="TP.HCM">
+            <label for="dep-hcm">Khởi hành từ TP.HCM</label>
+          </fieldset>
+
+          <div class="vform__grid">
+            <p class="field field--full">
+              <label for="b-area">Khu vực muốn đi</label>
+              <select id="b-area" name="area">
+                <option value="" selected>Chọn khu vực</option>
+                <option>Đông Âu</option>
+                <option>Tây Âu</option>
+                <option>Bắc Âu - Iceland</option>
+                <option>New Zealand</option>
+                <option>Úc</option>
+                <option>Visa &amp; dịch vụ khác</option>
+              </select>
+            </p>
+            <p class="field">
+              <label for="b-name">Họ và tên <abbr title="bắt buộc">*</abbr></label>
+              <input id="b-name" name="name" type="text" autocomplete="name" required placeholder="Nguyễn Văn A">
+            </p>
+            <p class="field">
+              <label for="b-tel">Số điện thoại <abbr title="bắt buộc">*</abbr></label>
+              <input id="b-tel" name="tel" type="tel" autocomplete="tel" required placeholder="09xx xxx xxx">
+            </p>
+            <p class="field">
+              <label for="b-when">Thời gian dự kiến đi</label>
+              <!-- đủ các tháng có lịch khởi hành trong bảng giá, 10/2026 → 03/2027 -->
+              <select id="b-when" name="when">
+                <option value="" selected>Chọn tháng</option>
+                <option>Tháng 10/2026</option>
+                <option>Tháng 11/2026</option>
+                <option>Tháng 12/2026</option>
+                <option>Tháng 01/2027</option>
+                <option>Tháng 02/2027</option>
+                <option>Tháng 03/2027</option>
+                <option>Chưa xác định</option>
+              </select>
+            </p>
+            <p class="field">
+              <label for="b-pax">Số lượng khách</label>
+              <input id="b-pax" name="pax" type="number" min="1" inputmode="numeric" placeholder="VD: 2">
+            </p>
+            <p class="field field--full">
+              <label for="b-note">Ghi chú thêm</label>
+              <textarea id="b-note" name="note" rows="2" placeholder="Hành trình bạn quan tâm, yêu cầu phòng, visa…"></textarea>
+            </p>
+          </div>
+
+          <button class="btn btn--accent btn--lg vform__submit" type="submit">
+            Đăng ký ngay
+            <span class="btn__dot"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h13"/><path d="m12.5 6 6 6-6 6"/></svg></span>
+          </button>
+        </form>
+
+      </div>
+    </div>
+  </section>
+
+  </div><!-- /.eintro -->
+
+  <!-- ===================== 3 · VÌ SAO CHỌN AVORY ===================== -->
+  <section class="merits" aria-labelledby="merits-title">
+    <div class="container">
+      <h2 class="h2 h2--center" id="merits-title">Vì sao chọn <span class="brand">AVORY</span> cho hành trình quốc tế của bạn?</h2>
+
+      <ul class="merits__grid merits__grid--4">
+        <li class="merit">
+          <span class="merit__ico"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8Z"/><path d="M14 3v5h5"/><path d="m9 14 2 2 4-4"/></svg></span>
+          <h3>Tối ưu hồ sơ Visa</h3>
+          <p>Hỗ trợ từ A–Z, kể cả hồ sơ từng bị từ chối.</p>
+        </li>
+        <li class="merit">
+          <span class="merit__ico"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 21V5a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v16"/><path d="M16 9h2a2 2 0 0 1 2 2v10M2.5 21h19M8 7.5h4M8 11.5h4M8 15.5h4"/></svg></span>
+          <h3>Khách sạn 3-4★</h3>
+          <p>Tiêu chuẩn quốc tế, đúng theo chương trình.</p>
+        </li>
+        <li class="merit">
+          <span class="merit__ico"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M21 16v-2l-8-5V3.5a1.5 1.5 0 0 0-3 0V9l-8 5v2l8-2.5V19l-2 1.5V22l3.5-1 3.5 1v-1.5L13 19v-5.5l8 2.5Z"/></svg></span>
+          <h3>Bay thẳng / hãng uy tín</h3>
+          <p>Vietjet, Vietnam Airlines, Turkish Airlines, Malaysia Airlines.</p>
+        </li>
+        <li class="merit">
+          <span class="merit__ico"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5.5 21V3.5"/><path d="M5.5 4h12l-2.6 3.8L17.5 11.6h-12"/></svg></span>
+          <h3>HDV tiếng Việt</h3>
+          <p>Chuyên nghiệp, đồng hành xuyên suốt hành trình từ Việt Nam.</p>
+        </li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- ===================== 4 · HÀNH TRÌNH CHÂU ÂU ===================== -->
+  <section class="tours tours--banner" id="chau-au" aria-labelledby="eu-title">
+    <div class="container">
+      <!-- Banner ảnh sáng tràn hai mép sau cụm tiêu đề (lần sửa 25): neo vào
+           .tours__head — từ 72px trên nhãn nhỏ tới 150px lấn vào ảnh thẻ tour,
+           đáy tan dần vào nền trang. Xem chau-au.css, mục 4. -->
+      <div class="tours__head">
+        <!-- Một file duy nhất, không srcset: ở màn hẹp khung banner gần vuông,
+             ảnh "cover" theo CHIỀU CAO nên cần đủ 700px dọc ở mọi màn — bản
+             nhỏ hơn sẽ bị kéo giãn. -->
+        <div class="tours__banner" aria-hidden="true">
+          <img src="assets/tours-banner.jpg" width="2000" height="937" loading="lazy" alt="">
+        </div>
+        <p class="kicker">Hành trình tinh hoa</p>
+        <h2 class="h2 h2--center" id="eu-title">Tour Châu Âu</h2>
+        <p class="lead tours__sub">Năm hành trình mùa lễ hội, từ phố cổ Đông Âu, đỉnh tuyết Thụy Sĩ đến bầu trời cực quang Iceland.</p>
+      </div>
+
+      <!-- 3 thẻ hàng trên, 2 thẻ hàng dưới (rộng hơn, cùng chiều cao ảnh).
+           Iceland ở cuối là thẻ cao cấp nền xanh đậm. -->
+      <div class="tours__grid">
+
+        <article class="dcard tcard">
+          <div class="dcard__media" aria-hidden="true">
+            <img src="assets/tour-prague.jpg" alt="" width="1400" height="933" loading="lazy">
+            <span class="tcard__tag"><span>Mùa lễ hội</span></span>
+          </div>
+          <div class="dcard__body">
+            <div class="dcard__head">
+              <div class="dcard__headIn">
+                <p class="dcard__flag">9N8Đ · Bay thẳng Vietjet Air</p>
+                <h3>Đông Âu 4 nước</h3>
+              </div>
+              <div class="dcard__headIn dcard__headIn--fill" aria-hidden="true">
+                <p class="dcard__flag">9N8Đ · Bay thẳng Vietjet Air</p>
+                <h3>Đông Âu 4 nước</h3>
+              </div>
+            </div>
+            <p class="dcard__note">Séc – Áo – Slovakia – Hungary</p>
+            <p class="tcard__desc">Đón năm mới giữa 4 quốc gia cổ kính nhất Đông Âu, ăn trưa du thuyền sông Danube.</p>
+            <dl class="dcard__meta">
+              <div><dt>Lịch khởi hành</dt><dd>26/12/2026 · 06/02/2027</dd></div>
+            </dl>
+            <div class="dcard__foot">
+              <span class="dcard__price"><small>Giá / khách</small><b>79.900.000<span class="cur">đ</span></b></span>
+              <div class="tcard__row">
+                <span class="tcard__group"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="9" cy="8.4" r="2.8"/><circle cx="16.6" cy="9.6" r="2.2"/><path d="M3.6 18.6a5.4 5.4 0 0 1 10.8 0M15.4 14.4a4.4 4.4 0 0 1 5 4.2"/></svg>Đoàn ghép từ 15 khách</span>
+                <a class="btn btn--accent btn--sm" href="#dang-ky">
+                  Xem chi tiết
+                  <span class="btn__dot"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h13"/><path d="m12.5 6 6 6-6 6"/></svg></span>
+                </a>
+              </div>
+            </div>
+          </div>
+        </article>
+
+        <article class="dcard tcard">
+          <div class="dcard__media" aria-hidden="true">
+            <img src="assets/tour-munich.jpg" alt="" width="1400" height="855" loading="lazy">
+            <span class="tcard__tag"><span>Đón Noel tại Munich</span></span>
+          </div>
+          <div class="dcard__body">
+            <div class="dcard__head">
+              <div class="dcard__headIn">
+                <p class="dcard__flag">13N12Đ · Bay thẳng Vietjet Air</p>
+                <h3>Trung &amp; Đông Âu 6 nước</h3>
+              </div>
+              <div class="dcard__headIn dcard__headIn--fill" aria-hidden="true">
+                <p class="dcard__flag">13N12Đ · Bay thẳng Vietjet Air</p>
+                <h3>Trung &amp; Đông Âu 6 nước</h3>
+              </div>
+            </div>
+            <p class="dcard__note">Séc – Đức – Áo – Slovakia – Hungary – Slovenia</p>
+            <p class="tcard__desc">Trải nghiệm trọn vẹn từ chợ Giáng Sinh Munich đến viên ngọc Hồ Bled, Slovenia.</p>
+            <dl class="dcard__meta">
+              <div><dt>Lịch khởi hành</dt><dd>22/12/2026</dd></div>
+            </dl>
+            <div class="dcard__foot">
+              <span class="dcard__price"><small>Giá / khách</small><b>109.900.000<span class="cur">đ</span></b></span>
+              <div class="tcard__row">
+                <span class="tcard__group"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="9" cy="8.4" r="2.8"/><circle cx="16.6" cy="9.6" r="2.2"/><path d="M3.6 18.6a5.4 5.4 0 0 1 10.8 0M15.4 14.4a4.4 4.4 0 0 1 5 4.2"/></svg>Đoàn ghép từ 15 khách</span>
+                <a class="btn btn--accent btn--sm" href="#dang-ky">
+                  Xem chi tiết
+                  <span class="btn__dot"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h13"/><path d="m12.5 6 6 6-6 6"/></svg></span>
+                </a>
+              </div>
+            </div>
+          </div>
+        </article>
+
+        <article class="dcard tcard">
+          <div class="dcard__media" aria-hidden="true">
+            <img src="assets/tour-paris.jpg" alt="" width="1400" height="1040" loading="lazy">
+            <span class="tcard__tag"><span>Từ Paris hoa lệ đến đỉnh tuyết Titlis</span></span>
+          </div>
+          <div class="dcard__body">
+            <div class="dcard__head">
+              <div class="dcard__headIn">
+                <p class="dcard__flag">9N8Đ · Bay thẳng Vietnam Airlines</p>
+                <h3>Pháp – Thụy Sĩ – Đức</h3>
+              </div>
+              <div class="dcard__headIn dcard__headIn--fill" aria-hidden="true">
+                <p class="dcard__flag">9N8Đ · Bay thẳng Vietnam Airlines</p>
+                <h3>Pháp – Thụy Sĩ – Đức</h3>
+              </div>
+            </div>
+            <p class="dcard__note">Paris – Colmar – Interlaken – Lucerne – Titlis – Zurich – Frankfurt</p>
+            <p class="tcard__desc">Cáp treo Titlis 360°, thị trấn cổ tích Colmar, du thuyền sông Seine tại Paris.</p>
+            <dl class="dcard__meta">
+              <div><dt>Lịch khởi hành</dt><dd>17 – 25/11/2026</dd></div>
+            </dl>
+            <div class="dcard__foot">
+              <span class="dcard__price"><small>Giá / khách</small><b>69.900.000<span class="cur">đ</span></b></span>
+              <div class="tcard__row">
+                <span class="tcard__group"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="9" cy="8.4" r="2.8"/><circle cx="16.6" cy="9.6" r="2.2"/><path d="M3.6 18.6a5.4 5.4 0 0 1 10.8 0M15.4 14.4a4.4 4.4 0 0 1 5 4.2"/></svg>Đoàn ghép từ 25 khách</span>
+                <a class="btn btn--accent btn--sm" href="#dang-ky">
+                  Xem chi tiết
+                  <span class="btn__dot"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h13"/><path d="m12.5 6 6 6-6 6"/></svg></span>
+                </a>
+              </div>
+            </div>
+          </div>
+        </article>
+
+        <article class="dcard tcard">
+          <div class="dcard__media" aria-hidden="true">
+            <img src="assets/dest-schengen.jpg" alt="" width="1000" height="1000" loading="lazy">
+            <span class="tcard__tag"><span>Bán chạy nhất</span></span>
+          </div>
+          <div class="dcard__body">
+            <div class="dcard__head">
+              <div class="dcard__headIn">
+                <p class="dcard__flag">10N9Đ · Turkish Airlines</p>
+                <h3>Tây Âu 4 nước</h3>
+              </div>
+              <div class="dcard__headIn dcard__headIn--fill" aria-hidden="true">
+                <p class="dcard__flag">10N9Đ · Turkish Airlines</p>
+                <h3>Tây Âu 4 nước</h3>
+              </div>
+            </div>
+            <p class="dcard__note">Pháp – Thụy Sĩ – Ý – Vatican</p>
+            <p class="tcard__desc">Trọn bộ biểu tượng kinh điển nhất châu Âu: gondola Venice, tháp nghiêng Pisa, Đấu trường La Mã, Vatican.</p>
+            <dl class="dcard__meta">
+              <div><dt>Lịch khởi hành</dt><dd>22/11 – 01/12/2026 · 23/12/2026 – 01/01/2027 (Noel)</dd></div>
+            </dl>
+            <div class="dcard__foot">
+              <span class="dcard__price"><small>Tùy ngày khởi hành</small><b>82.900.000 – 85.900.000<span class="cur">đ</span></b></span>
+              <div class="tcard__row">
+                <span class="tcard__group"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="9" cy="8.4" r="2.8"/><circle cx="16.6" cy="9.6" r="2.2"/><path d="M3.6 18.6a5.4 5.4 0 0 1 10.8 0M15.4 14.4a4.4 4.4 0 0 1 5 4.2"/></svg>Đoàn ghép từ 25 khách</span>
+                <a class="btn btn--accent btn--sm" href="#dang-ky">
+                  Xem chi tiết
+                  <span class="btn__dot"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h13"/><path d="m12.5 6 6 6-6 6"/></svg></span>
+                </a>
+              </div>
+            </div>
+          </div>
+        </article>
+
+        <!-- Iceland: file nội dung ghi "giá cao hơn hẳn nhóm còn lại — cần làm rõ đây là
+             sản phẩm cao cấp/niche", nên thẻ này đổi sang nền xanh đậm + nhãn "Cao cấp". -->
+        <article class="dcard tcard tcard--premium">
+          <div class="dcard__media" aria-hidden="true">
+            <img src="assets/tour-iceland.jpg" alt="" width="1400" height="934" loading="lazy">
+            <span class="tcard__tag"><span>Cao cấp · Trải nghiệm độc quyền</span></span>
+          </div>
+          <div class="dcard__body">
+            <div class="dcard__head">
+              <div class="dcard__headIn">
+                <p class="dcard__flag">9N8Đ · Vietnam Airlines + FinAir</p>
+                <h3>Đến Iceland, săn cực quang</h3>
+              </div>
+              <div class="dcard__headIn dcard__headIn--fill" aria-hidden="true">
+                <p class="dcard__flag">9N8Đ · Vietnam Airlines + FinAir</p>
+                <h3>Đến Iceland, săn cực quang</h3>
+              </div>
+            </div>
+            <p class="dcard__note">Pháp – Iceland</p>
+            <p class="tcard__desc">Săn cực quang Aurora, tắm khoáng Blue Lagoon, khám phá hang băng Vatnajökull.</p>
+            <dl class="dcard__meta">
+              <div><dt>Lịch khởi hành</dt><dd>12/2026 – 03/2027</dd></div>
+            </dl>
+            <div class="dcard__foot">
+              <span class="dcard__price"><small>Từ</small><b>169.900.000<span class="cur">đ</span></b></span>
+              <div class="tcard__row">
+                <span class="tcard__group"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="9" cy="8.4" r="2.8"/><circle cx="16.6" cy="9.6" r="2.2"/><path d="M3.6 18.6a5.4 5.4 0 0 1 10.8 0M15.4 14.4a4.4 4.4 0 0 1 5 4.2"/></svg>Đoàn riêng từ 10 khách</span>
+                <a class="btn btn--accent btn--sm" href="#dang-ky">
+                  Xem chi tiết
+                  <span class="btn__dot"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h13"/><path d="m12.5 6 6 6-6 6"/></svg></span>
+                </a>
+              </div>
+            </div>
+          </div>
+        </article>
+
+      </div>
+
+      <p class="tours__more">
+        <a class="btn btn--accent btn--lg" href="#dang-ky">
+          Xem thêm lịch trình Châu Âu
+          <span class="btn__dot"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h13"/><path d="m12.5 6 6 6-6 6"/></svg></span>
+        </a>
+      </p>
+    </div>
+  </section>
+
+  <!-- ===================== 5 · HÀNH TRÌNH CHÂU ĐẠI DƯƠNG ===================== -->
+  <section class="tours tours--banner tours--nz" id="dai-duong" aria-labelledby="oc-title">
+    <div class="container">
+      <!-- Banner như mục Châu Âu (lần sửa 27): bờ biển Kaikoura, New Zealand —
+           trời xanh sau cụm chữ, dãy núi xa + biển ngay trên/giữa hai thẻ. -->
+      <div class="tours__head">
+        <div class="tours__banner" aria-hidden="true">
+          <img src="assets/tours-banner-nz.jpg" width="2000" height="937" loading="lazy" alt="">
+        </div>
+        <p class="kicker">Hành trình kỳ vĩ</p>
+        <h2 class="h2 h2--center" id="oc-title">Tour New Zealand &amp; Úc</h2>
+        <p class="lead tours__sub">Hai hành trình mùa hè Nam bán cầu, trùng dịp Noel và Tết, giữa thiên nhiên hùng vĩ và những thành phố rực rỡ.</p>
+      </div>
+
+      <!-- 2 thẻ, mỗi thẻ nửa hàng — cùng khổ với hàng dưới của mục Châu Âu -->
+      <div class="tours__grid tours__grid--duo">
+
+        <article class="dcard tcard">
+          <div class="dcard__media" aria-hidden="true">
+            <img src="assets/tour-nz.jpg" alt="" width="1400" height="933" loading="lazy">
+            <span class="tcard__tag"><span>Khám phá trọn vẹn 2 đảo</span></span>
+          </div>
+          <div class="dcard__body">
+            <div class="dcard__head">
+              <div class="dcard__headIn">
+                <p class="dcard__flag">10N9Đ · Malaysia Airlines</p>
+                <h3>New Zealand 2 đảo Bắc – Nam</h3>
+              </div>
+              <div class="dcard__headIn dcard__headIn--fill" aria-hidden="true">
+                <p class="dcard__flag">10N9Đ · Malaysia Airlines</p>
+                <h3>New Zealand 2 đảo Bắc – Nam</h3>
+              </div>
+            </div>
+            <p class="dcard__note">Auckland – Rotorua – Queenstown – Milford Sound – Mt Cook – Christchurch</p>
+            <p class="tcard__desc">Phim trường Hobbiton, hang đom đóm Waitomo, du thuyền Milford Sound.</p>
+            <dl class="dcard__meta">
+              <div><dt>Lịch khởi hành</dt><dd>27/11 – 06/12/2026 · 25/12/2026 – 03/01/2027 (Noel) · 07 – 16/02/2027 (Tết)</dd></div>
+            </dl>
+            <div class="dcard__foot">
+              <span class="dcard__price"><small>Tùy ngày khởi hành</small><b>125.900.000 – 128.900.000<span class="cur">đ</span></b></span>
+              <div class="tcard__row">
+                <span class="tcard__group"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="9" cy="8.4" r="2.8"/><circle cx="16.6" cy="9.6" r="2.2"/><path d="M3.6 18.6a5.4 5.4 0 0 1 10.8 0M15.4 14.4a4.4 4.4 0 0 1 5 4.2"/></svg>Đoàn ghép từ 25 khách</span>
+                <a class="btn btn--accent btn--sm" href="#dang-ky">
+                  Xem chi tiết
+                  <span class="btn__dot"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h13"/><path d="m12.5 6 6 6-6 6"/></svg></span>
+                </a>
+              </div>
+            </div>
+          </div>
+        </article>
+
+        <article class="dcard tcard">
+          <div class="dcard__media" aria-hidden="true">
+            <img src="assets/dest-au.jpg" alt="" width="1000" height="563" loading="lazy">
+            <span class="tcard__tag"><span>Chạm nước Úc, đi giữa mùa hoa</span></span>
+          </div>
+          <div class="dcard__body">
+            <div class="dcard__head">
+              <div class="dcard__headIn">
+                <p class="dcard__flag">7N6Đ · Bay thẳng Vietnam Airlines</p>
+                <h3>Úc – Cung đường Kim Cương</h3>
+              </div>
+              <div class="dcard__headIn dcard__headIn--fill" aria-hidden="true">
+                <p class="dcard__flag">7N6Đ · Bay thẳng Vietnam Airlines</p>
+                <h3>Úc – Cung đường Kim Cương</h3>
+              </div>
+            </div>
+            <p class="dcard__note">Melbourne – Canberra – Sydney</p>
+            <p class="tcard__desc">Tàu hơi nước cổ Puffing Billy, Sydney Opera House, mùa hoa phượng tím và cherry.</p>
+            <dl class="dcard__meta">
+              <div><dt>Lịch khởi hành</dt><dd>Nhiều đợt 10/2026 – 01/2027 theo mùa hoa</dd></div>
+            </dl>
+            <div class="dcard__foot">
+              <span class="dcard__price"><small>Tùy ngày khởi hành</small><b>67.900.000 – 75.500.000<span class="cur">đ</span></b></span>
+              <div class="tcard__row">
+                <span class="tcard__group"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="9" cy="8.4" r="2.8"/><circle cx="16.6" cy="9.6" r="2.2"/><path d="M3.6 18.6a5.4 5.4 0 0 1 10.8 0M15.4 14.4a4.4 4.4 0 0 1 5 4.2"/></svg>Đoàn ghép từ 10 khách</span>
+                <a class="btn btn--accent btn--sm" href="#dang-ky">
+                  Xem chi tiết
+                  <span class="btn__dot"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h13"/><path d="m12.5 6 6 6-6 6"/></svg></span>
+                </a>
+              </div>
+            </div>
+          </div>
+        </article>
+
+      </div>
+
+      <p class="tours__more">
+        <a class="btn btn--accent btn--lg" href="#dang-ky">
+          Xem thêm lịch trình New Zealand &amp; Úc
+          <span class="btn__dot"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h13"/><path d="m12.5 6 6 6-6 6"/></svg></span>
+        </a>
+      </p>
+    </div>
+  </section>
+
+  <!-- ===================== 6 · BẢNG GIÁ ===================== -->
+  <section class="pricing" id="bang-gia" aria-labelledby="pricing-title">
+    <div class="container">
+      <h2 class="h2 h2--center" id="pricing-title">Bảng giá 7 hành trình quốc tế <span class="brand">AVORY</span> – mùa lễ hội 2026 – 2027</h2>
+
+      <div class="pricing__card">
+        <p class="pricing__hint">Vuốt ngang để xem đầy đủ bảng giá →</p>
+        <div class="pricing__scroll">
+          <table class="ptable ptable--tours">
+            <caption class="sr-only">Bảng giá 7 hành trình quốc tế AVORY mùa lễ hội 2026 – 2027</caption>
+            <thead>
+              <tr>
+                <th scope="col">Khu vực</th>
+                <th scope="col">Chương trình</th>
+                <th scope="col">Thời gian</th>
+                <th scope="col">Hãng bay</th>
+                <th scope="col">Lịch khởi hành</th>
+                <th scope="col" class="num">Giá / khách</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <th scope="rowgroup" rowspan="5"><span class="region">Châu Âu</span></th>
+                <td><b>Đông Âu 4 nước</b> (Séc – Áo – Slovakia – Hungary)<small>Đoàn ghép ≥15 khách</small></td>
+                <td>9N8Đ</td>
+                <td>Vietjet Air (bay thẳng)</td>
+                <td>26/12/2026, 06/02/2027</td>
+                <td class="num">79.900.000<span class="cur">đ</span></td>
+              </tr>
+              <tr>
+                <td><b>Trung &amp; Đông Âu 6 nước</b> (+Đức, Slovenia)<small>Đoàn ghép ≥15 khách; đón Noel tại Munich</small></td>
+                <td>13N12Đ</td>
+                <td>Vietjet Air (bay thẳng)</td>
+                <td>22/12/2026</td>
+                <td class="num">109.900.000<span class="cur">đ</span></td>
+              </tr>
+              <tr>
+                <td><b>Pháp – Thụy Sĩ – Đức</b><small>Đoàn ghép ≥25 khách</small></td>
+                <td>9N8Đ</td>
+                <td>Vietnam Airlines (bay thẳng)</td>
+                <td>17 – 25/11/2026</td>
+                <td class="num">69.900.000<span class="cur">đ</span></td>
+              </tr>
+              <tr>
+                <td><b>Tây Âu</b> (Pháp – Thụy Sĩ – Ý – Vatican)<small>Đoàn ghép ≥25 khách</small></td>
+                <td>10N9Đ</td>
+                <td>Turkish Airlines (transit Istanbul)</td>
+                <td>22/11 – 01/12/2026<br>23/12/2026 – 01/01/2027 (Noel)</td>
+                <td class="num"><span class="rng">từ</span> 82.900.000<span class="cur">đ</span><br><span class="rng">đến</span> 85.900.000<span class="cur">đ</span></td>
+              </tr>
+              <tr>
+                <td><b>Iceland săn cực quang</b> (Pháp – Iceland)<small>Đoàn riêng ≥10 khách – sản phẩm cao cấp</small></td>
+                <td>9N8Đ</td>
+                <td>Vietnam Airlines + FinAir</td>
+                <td>12/2026 – 03/2027</td>
+                <td class="num"><span class="rng">từ</span> 169.900.000<span class="cur">đ</span></td>
+              </tr>
+              <tr class="ptable__group">
+                <th scope="rowgroup" rowspan="2"><span class="region">Châu<br>Đại Dương</span></th>
+                <td><b>New Zealand 2 đảo Bắc – Nam</b><small>Đoàn ghép ≥25 khách</small></td>
+                <td>10N9Đ</td>
+                <td>Malaysia Airlines (transit Kuala Lumpur)</td>
+                <td>27/11 – 06/12, 25/12 – 03/01 (Noel)<br>07 – 16/02/2027 (Tết)</td>
+                <td class="num"><span class="rng">từ</span> 125.900.000<span class="cur">đ</span><br><span class="rng">đến</span> 128.900.000<span class="cur">đ</span></td>
+              </tr>
+              <tr>
+                <td><b>Úc – Cung đường Kim Cương</b> (Melbourne – Canberra – Sydney)<small>Đoàn ghép ≥10 khách; giá theo mùa phượng tím / cherry / Noel / Tết Dương</small></td>
+                <td>7N6Đ</td>
+                <td>Vietnam Airlines (bay thẳng)</td>
+                <td>Nhiều đợt 10/2026 – 01/2027 theo mùa hoa</td>
+                <td class="num"><span class="rng">từ</span> 67.900.000<span class="cur">đ</span><br><span class="rng">đến</span> 75.500.000<span class="cur">đ</span></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <p class="pricing__legal">
+          Giá trên mang tính tham khảo tại thời điểm 09/2026, áp dụng cho đoàn ghép theo điều kiện số lượng
+          khách tối thiểu từng chương trình. Giá KHÔNG bao gồm: phí làm hộ chiếu, phí visa (nếu hồ sơ không
+          được chấp thuận, phí visa và các chi phí phát sinh liên quan không được hoàn lại), phụ thu phòng
+          đơn, chi phí cá nhân, tiền boa cho HDV và lái xe. AVORY sẽ báo giá và tư vấn chính xác theo nhu cầu
+          và thời điểm đăng ký của bạn.
+        </p>
+
+        <a class="btn btn--accent btn--lg pricing__cta" href="#dang-ky">
+          Nhận báo giá chính xác theo nhu cầu
+          <span class="btn__dot"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h13"/><path d="m12.5 6 6 6-6 6"/></svg></span>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== 7 · QUY TRÌNH ĐẶT TOUR ===================== -->
+  <section class="steps" id="quy-trinh" aria-labelledby="steps-title">
+    <div class="container">
+      <h2 class="h2 h2--center h2--light" id="steps-title">Quy trình đặt tour tại AVORY - 5 bước đơn giản</h2>
+
+      <ol class="steps__list">
+        <li class="step">
+          <span class="step__num">01</span>
+          <h3>Để lại thông tin</h3>
+          <p>Điền form tư vấn hoặc gọi hotline <span class="nb">1800 8386.</span></p>
+        </li>
+        <li class="step">
+          <span class="step__num">02</span>
+          <h3>Nhận lịch trình &amp; báo giá</h3>
+          <p>Chi tiết, chính xác theo nhu cầu <span class="nb">của bạn.</span></p>
+        </li>
+        <li class="step">
+          <span class="step__num">03</span>
+          <h3>Tư vấn visa &amp; đặt cọc</h3>
+          <p>Tư vấn hồ sơ Visa, đặt cọc <span class="nb">giữ chỗ.</span></p>
+        </li>
+        <li class="step">
+          <span class="step__num">04</span>
+          <h3>Chuẩn bị hồ sơ &amp; thanh toán</h3>
+          <p>Thanh toán theo tiến độ <span class="nb">hợp đồng.</span></p>
+        </li>
+        <li class="step">
+          <span class="step__num">05</span>
+          <h3>Khởi hành cùng AVORY</h3>
+          <p>HDV AVORY hỗ trợ xuyên suốt <span class="nb">hành trình.</span></p>
+        </li>
+      </ol>
+    </div>
+  </section>
+
+  <!-- Hai mục "Hình ảnh khách hàng thực tế" và "Khách hàng nói gì về AVORY?" chưa
+       dựng: file nội dung ghi [CẦN THU THẬP] ảnh/review thật, "không tự dựng".
+       Chèn vào đúng chỗ này khi đã có tư liệu (xem README). -->
+
+  <!-- ===================== 8 · CAM KẾT CỦA AVORY ===================== -->
+  <section class="pledge" aria-labelledby="pledge-title">
+    <div class="container">
+      <div class="pledge__box">
+        <div class="pledge__intro">
+          <h2 class="h2" id="pledge-title">Cam kết của <span class="brand">AVORY</span></h2>
+          <p class="lead">Bốn điều AVORY áp dụng cho mọi hành trình quốc tế, để bạn biết rõ mình nhận được gì ngay từ lúc báo giá.</p>
+          <a class="btn btn--accent btn--lg" href="#dang-ky">
+            Nhận lịch trình &amp; báo giá
+            <span class="btn__dot"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h13"/><path d="m12.5 6 6 6-6 6"/></svg></span>
+          </a>
+        </div>
+
+        <!-- Mỗi cam kết là một thẻ .merit — đúng thành phần của mục "Vì sao chọn
+             AVORY" (và của index.html), nên cả kiểu desktop, kiểu mobile lẫn hiệu
+             ứng rê chuột đều dùng chung, sửa .merit là hai mục cùng đổi. -->
+        <ul class="pledge__list">
+          <li class="merit">
+            <span class="merit__ico"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 18.4V8.6M3 12.6h13.6a4 4 0 0 1 4 4v1.8M3 18.4h17.6M6.6 9.4h3.2a1.8 1.8 0 0 1 0 3.2H6.6Z"/></svg></span>
+            <h3>Đúng chuẩn khách sạn 3-4★</h3>
+            <p>Theo đúng chương trình đã ký kết.</p>
+          </li>
+          <li class="merit">
+            <span class="merit__ico"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 7v10M9.5 9.5h4a1.8 1.8 0 0 1 0 3.6h-3a1.8 1.8 0 0 0 0 3.6h4"/></svg></span>
+            <h3>Giá trọn gói minh bạch</h3>
+            <p>Nêu rõ các khoản không bao gồm (visa, phụ thu phòng đơn, tiền boa HDV/lái xe) ngay từ đầu.</p>
+          </li>
+          <li class="merit">
+            <span class="merit__ico"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 4.4 3.6 6.6v13L9 17.4l6 2.2 5.4-2.2v-13L15 6.6Z"/><path d="M9 4.4v13M15 6.6v13"/></svg></span>
+            <h3>Tập trung tham quan</h3>
+            <p>Không có điểm dừng mua sắm bắt buộc ngoài chương trình.</p>
+          </li>
+          <li class="merit">
+            <span class="merit__ico"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3 4 6v6c0 4.4 3.4 8.3 8 9 4.6-.7 8-4.6 8-9V6Z"/><path d="m9 12 2 2 4-4"/></svg></span>
+            <h3>Bảo hiểm đến 50.000 USD</h3>
+            <p>Bảo hiểm du lịch quốc tế mức bồi thường tối đa 50.000 USD/người, đã gồm trong giá tour.</p>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== 9 · VISA & DỊCH VỤ TỰ TÚC ===================== -->
+  <section class="services" id="visa-dich-vu" aria-labelledby="services-title">
+    <div class="container">
+      <h2 class="h2 h2--center" id="services-title">Visa &amp; dịch vụ du lịch tự túc</h2>
+      <p class="lead services__sub">Muốn tự do khám phá theo cách riêng? AVORY cung cấp các dịch vụ lẻ: tư vấn visa, vé máy bay, combo trọn gói…</p>
+
+      <ul class="services__grid">
+        <!-- Thẻ visa dẫn thẳng sang landing page visa (index.html cùng thư mục) -->
+        <li class="pcard pcard--accent">
+          <span class="pcard__ico"><svg viewBox="0 0 24 24" aria-hidden="true"><path fill-rule="evenodd" d="M6.5 2h11A2.5 2.5 0 0 1 20 4.5v15a2.5 2.5 0 0 1-2.5 2.5h-11A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2Zm5.5 4a3.9 3.9 0 1 0 0 7.8A3.9 3.9 0 0 0 12 6Zm0 1.7a2.2 2.2 0 1 1 0 4.4 2.2 2.2 0 0 1 0-4.4ZM8.4 16.4a.9.9 0 0 0 0 1.8h7.2a.9.9 0 0 0 0-1.8H8.4Z"/></svg></span>
+          <h3>Tư vấn &amp; hỗ trợ hồ sơ Visa</h3>
+          <p>Đội ngũ chuyên viên giàu kinh nghiệm, đồng hành từ A–Z.</p>
+          <a class="pcard__more" href="index.html">Nhận báo giá Visa →</a>
+        </li>
+        <li class="pcard">
+          <span class="pcard__ico"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M21 16v-2l-8-5V3.5a1.5 1.5 0 0 0-3 0V9l-8 5v2l8-2.5V19l-2 1.5V22l3.5-1 3.5 1v-1.5L13 19v-5.5l8 2.5Z"/></svg></span>
+          <h3>Vé máy bay quốc tế</h3>
+          <p>Tra cứu và đặt vé các hãng bay quốc tế theo lịch trình của bạn.</p>
+          <a class="pcard__more" href="#dang-ky">Tra cứu vé →</a>
+        </li>
+        <li class="pcard">
+          <span class="pcard__ico"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 2h6a1 1 0 0 1 1 1v3.2h-1.8V3.8H9.8v2.4H8V3a1 1 0 0 1 1-1Z"/><path fill-rule="evenodd" d="M6.5 6.8h11A2.5 2.5 0 0 1 20 9.3v9.2a2.5 2.5 0 0 1-2.5 2.5h-11A2.5 2.5 0 0 1 4 18.5V9.3a2.5 2.5 0 0 1 2.5-2.5Zm2.4 3a.9.9 0 0 0-.9.9v6.4a.9.9 0 0 0 1.8 0v-6.4a.9.9 0 0 0-.9-.9Zm6.2 0a.9.9 0 0 0-.9.9v6.4a.9.9 0 0 0 1.8 0v-6.4a.9.9 0 0 0-.9-.9Z"/><path d="M7 21.4h2v.9a.7.7 0 0 1-.7.7h-.6a.7.7 0 0 1-.7-.7v-.9Zm8 0h2v.9a.7.7 0 0 1-.7.7h-.6a.7.7 0 0 1-.7-.7v-.9Z"/></svg></span>
+          <h3>Combo Visa + Vé + Khách sạn</h3>
+          <p>Free &amp; Easy: tự do lịch trình, trọn gói visa, vé và phòng.</p>
+          <a class="pcard__more" href="#dang-ky">Xem các Combo →</a>
+        </li>
+        <li class="pcard">
+          <span class="pcard__ico"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 5.5A2.5 2.5 0 0 1 5.5 3h8A2.5 2.5 0 0 1 16 5.5v5a2.5 2.5 0 0 1-2.5 2.5H9l-3.6 2.9a.6.6 0 0 1-1-.5V13A2.5 2.5 0 0 1 3 10.7Z"/><path d="M17.6 7.6h.9A2.5 2.5 0 0 1 21 10.1v4.8a2.5 2.5 0 0 1-1.4 2.3v2.3a.6.6 0 0 1-1 .5l-3.3-2.5h-3.8a2.5 2.5 0 0 1-2.3-1.5h4.3a3.3 3.3 0 0 0 3.3-3.3Z"/></svg></span>
+          <h3>Thuê HDV / phiên dịch riêng</h3>
+          <p>Đồng hành riêng theo yêu cầu, thông thạo ngôn ngữ bản địa.</p>
+          <a class="pcard__more" href="#dang-ky">Liên hệ tư vấn →</a>
+        </li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- ===================== 10 · FAQ ===================== -->
+  <section class="faq" id="cam-nang" aria-labelledby="faq-title">
+    <div class="container">
+      <h2 class="h2 h2--center" id="faq-title">Câu hỏi thường gặp về tour Châu Âu – New Zealand – Úc</h2>
+
+      <div class="faq__grid">
+        <details class="qa" open>
+          <summary>Đi tour Châu Âu / Úc / New Zealand có cần xin visa không? Xin có khó không?</summary>
+          <p>Có. Châu Âu (khối Schengen) dùng chung 1 loại visa cho toàn bộ 15/17 nước trong hành trình; Úc và New Zealand mỗi nước có visa và cổng nộp riêng. AVORY hỗ trợ tư vấn và chuẩn bị hồ sơ visa từ A–Z cho tất cả các hành trình, kể cả hồ sơ từng bị từ chối trước đó.</p>
+        </details>
+
+        <details class="qa">
+          <summary>Nên đi vào thời điểm nào là đẹp nhất?</summary>
+          <p>Tùy hành trình: Đông Âu đẹp nhất mùa Giáng Sinh – Năm Mới (tháng 12 – 2) với không khí lễ hội; Iceland mùa săn cực quang là tháng 12 – 3; Úc có mùa hoa phượng tím (tháng 10 – 11) và mùa cherry (tháng 12); New Zealand mùa hè (tháng 11 – 2) là thời điểm lý tưởng để khám phá cả 2 đảo.</p>
+        </details>
+
+        <details class="qa">
+          <summary>Người lớn tuổi có phù hợp đi các hành trình này không?</summary>
+          <p>Phần lớn hành trình phù hợp với người lớn tuổi có sức khỏe tốt. Lưu ý: một số chương trình yêu cầu khách từ 70 tuổi cần giấy xác nhận sức khỏe (khách từ 80 tuổi được tư vấn thêm bảo hiểm nâng cao – áp dụng với Iceland); tour Úc yêu cầu phí khám sức khỏe với khách từ 75 tuổi trở lên theo quy định của cơ quan xét visa. AVORY sẽ tư vấn cụ thể theo từng trường hợp.</p>
+        </details>
+
+        <details class="qa">
+          <summary>Giá tour đã bao gồm bảo hiểm du lịch chưa?</summary>
+          <p>Đã bao gồm. Tất cả các hành trình của AVORY đều có bảo hiểm du lịch quốc tế với mức bồi thường tối đa 50.000 USD/người/vụ theo điều kiện hợp đồng bảo hiểm.</p>
+        </details>
+
+        <details class="qa">
+          <summary>Nếu hồ sơ bị từ chối visa, AVORY có hoàn tiền không?</summary>
+          <p>Phí visa và phí xử lý hồ sơ tại Đại sứ quán/Lãnh sự quán KHÔNG được hoàn lại trong mọi trường hợp, kể cả khi hồ sơ không được chấp thuận, theo đúng quy định của cơ quan cấp visa. Một số chương trình có thêm phí phát sinh nếu kết quả visa được biết trong khoảng thời gian sát ngày khởi hành (ví dụ: trong vòng 22 – 30 ngày trước khởi hành) – AVORY sẽ thông báo rõ trước khi khách đặt cọc.</p>
+        </details>
+
+        <details class="qa">
+          <summary>Tiền boa (tip) cho hướng dẫn viên và lái xe có trong giá tour chưa?</summary>
+          <p>Chưa bao gồm. Đây là khoản chi phí riêng theo thông lệ quốc tế, mức đề xuất khác nhau theo từng hành trình (ví dụ 80 – 150 EUR/khách/tour với các tuyến châu Âu, hoặc theo USD/khách/ngày với New Zealand và Úc) – AVORY sẽ thông báo mức cụ thể khi tư vấn từng chương trình.</p>
+        </details>
+
+        <details class="qa">
+          <summary>Lịch trình có điểm dừng mua sắm bắt buộc không?</summary>
+          <p>Không. Lịch trình AVORY tập trung vào tham quan và trải nghiệm; các điểm mua sắm (như Galeries Lafayette ở Paris) đều là thời gian tự do, không bắt buộc.</p>
+        </details>
+
+        <details class="qa">
+          <summary>Mua sắm tại châu Âu có được hoàn thuế (tax refund) không?</summary>
+          <p>Có. Khi mua sắm tại các cửa hàng đủ điều kiện ở châu Âu, du khách có thể làm thủ tục hoàn thuế VAT tại sân bay trước khi rời khối Schengen. AVORY sẽ hướng dẫn thủ tục cụ thể trong hành trình.</p>
+        </details>
+
+        <details class="qa">
+          <summary>Thực đơn ăn uống trong tour như thế nào?</summary>
+          <p>Các bữa ăn theo chương trình kết hợp thực đơn Việt Nam, châu Âu/châu Á tùy hành trình, với mức ăn tham khảo phổ biến 25 – 60 EUR (hoặc 30 – 80 AUD/NZD) mỗi bữa tùy chương trình cụ thể. Một số hành trình có bữa ăn đặc biệt (như ăn trưa trên du thuyền sông Danube hoặc buffet tại Sydney Tower).</p>
+        </details>
+
+        <details class="qa">
+          <summary>Hành lý mang theo được quy định thế nào?</summary>
+          <p>Tùy hãng bay: phổ biến 23kg hành lý ký gửi + 7 – 12kg hành lý xách tay cho các chuyến Vietnam Airlines/Vietjet/Malaysia Airlines; một số chặng có quy định khác nhau giữa các đoạn bay quốc tế và nội địa (ví dụ New Zealand có thêm chặng nội địa Canberra – Sydney). AVORY sẽ gửi thông tin hành lý chi tiết kèm vé máy bay.</p>
+        </details>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== 11 · CTA CUỐI TRANG ===================== -->
+  <section class="finale finale--center" id="lien-he" aria-labelledby="finale-title">
+    <img class="finale__bg" src="assets/intl-2.jpg" alt="" loading="lazy">
+    <div class="container">
+      <h2 class="h2 h2--light h2--center" id="finale-title">Hành trình đáng nhớ của bạn<br>bắt đầu từ hôm nay</h2>
+      <p class="finale__sub">Gọi tổng đài miễn phí hoặc nhắn Zalo, AVORY gửi lịch trình và báo giá theo đúng kế hoạch của bạn.</p>
+      <div class="finale__actions">
+        <a class="btn btn--accent btn--lg" href="tel:18008386">
+          Gọi ngay: 1800 8386
+          <span class="btn__dot"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2.1 4.2 2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1 1 .4 1.9.7 2.8a2 2 0 0 1-.5 2.1L8.1 9.9a16 16 0 0 0 6 6l1.3-1.2a2 2 0 0 1 2.1-.5c.9.3 1.8.6 2.8.7a2 2 0 0 1 1.7 2Z"/></svg></span>
+        </a>
+        <!-- TODO: gắn link Zalo OA thật của AVORY -->
+        <a class="btn btn--ghost btn--lg" href="#">Nhắn Zalo nhận báo giá</a>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<!-- ===================== FOOTER ===================== -->
+<footer class="footer">
+  <div class="container footer__top">
+    <img class="footer__logo" src="assets/logo-footer.png" alt="Avory Travel">
+
+    <div class="footer__cols">
+      <div>
+        <h3>Công ty Cổ phần Du Lịch AVORY TRAVEL</h3>
+
+        <p class="footer__address">
+          <img src="assets/footer-pin.svg" alt="">
+          <span>Số 9, A16-NV6, KĐT Lê Trọng Tấn, Tây Mỗ, Hà Nội</span>
+        </p>
+        <p class="footer__address">
+          <img src="assets/footer-mail.svg" alt="">
+          <a href="mailto:info.avory@avory.vn">info.avory@avory.vn</a>
+        </p>
+        <p class="footer__address">
+          <img src="assets/footer-web.svg" alt="">
+          <a href="https://avory.vn">avory.vn</a>
+        </p>
+
+        <div class="footer__social">
+          <span>Theo dõi chúng tôi trên:</span>
+          <ul>
+            <li><a href="#" aria-label="Facebook"><img src="assets/footer-social-2.svg" alt=""></a></li>
+            <li><a href="#" aria-label="Zalo"><img src="assets/footer-social-zalo.svg" alt=""></a></li>
+            <li><a href="#" aria-label="TikTok"><img src="assets/footer-social-tiktok.svg" alt=""></a></li>
+          </ul>
+        </div>
+
+        <a class="footer__hotline" href="tel:18008386">
+          <img src="assets/footer-phone.svg" alt="">
+          <span>
+            <b>1800 8386</b>
+            <small>Tổng đài miễn phí 24/7</small>
+          </span>
+        </a>
+      </div>
+
+      <div>
+        <h3>Tour theo khu vực</h3>
+        <nav class="footer__links" aria-label="Tour theo khu vực">
+          <a href="#chau-au">Tour Châu Âu</a>
+          <a href="#chau-au">Tour Iceland săn cực quang</a>
+          <a href="#dai-duong">Tour New Zealand</a>
+          <a href="#dai-duong">Tour Úc</a>
+          <a href="#bang-gia">Bảng giá tour</a>
+        </nav>
+      </div>
+
+      <div>
+        <h3>Visa &amp; Dịch vụ</h3>
+        <nav class="footer__links" aria-label="Visa và dịch vụ">
+          <a href="index.html">Dịch vụ visa AVORY</a>
+          <a href="#visa-dich-vu">Dịch vụ du lịch tự túc</a>
+          <a href="#">Chính sách bảo mật</a>
+          <a href="#">Điều khoản</a>
+        </nav>
+      </div>
+
+      <div>
+        <h3>Chứng nhận</h3>
+        <div class="footer__badges">
+          <p class="badge badge--bct">
+            <img src="assets/cert-bct.svg" alt="">
+            <span>Đã thông báo Bộ Công Thương</span>
+          </p>
+          <p class="badge badge--dmca">
+            <img src="assets/cert-dmca.svg" alt="">
+            <span>DMCA PROTECTED</span>
+          </p>
+        </div>
+
+        <h3 class="footer__pay-title">Chấp nhận thanh toán</h3>
+        <ul class="footer__pay">
+          <li class="pay pay--visa">VISA</li>
+          <li class="pay pay--mc">
+            <span class="mc"><i></i><i></i></span><span>mastercard</span>
+          </li>
+          <li class="pay pay--jcb"><i>J</i><i>C</i><i>B</i></li>
+          <li class="pay pay--vnpay"><span class="a">VN</span><span class="b">PAY</span></li>
+          <li class="pay pay--zalo"><span class="a">Zalo</span><span class="b">Pay</span></li>
+          <li class="pay pay--momo">MoMo</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <p class="footer__legal">Bản quyền của AVORY TRAVEL © 2026. Bảo lưu mọi quyền.</p>
+</footer>
+
+<!-- ===================== NÚT NỔI ===================== -->
+<div class="floats" aria-label="Liên hệ nhanh">
+  <a class="float float--call" href="tel:18008386" aria-label="Gọi 1800 8386">
+    <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2.1 4.2 2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1 1 .4 1.9.7 2.8a2 2 0 0 1-.5 2.1L8.1 9.9a16 16 0 0 0 6 6l1.3-1.2a2 2 0 0 1 2.1-.5c.9.3 1.8.6 2.8.7a2 2 0 0 1 1.7 2Z"/></svg>
+  </a>
+  <a class="float float--zalo" href="#" aria-label="Nhắn Zalo"><span>Zalo</span></a>
+  <a class="float float--msg" href="#" aria-label="Nhắn Messenger">
+    <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3c5 0 9 3.7 9 8.3 0 4.6-4 8.3-9 8.3a10 10 0 0 1-2.6-.3L5 21l1.2-3.3A8 8 0 0 1 3 11.3C3 6.7 7 3 12 3Z"/><path d="m7.5 13.5 3-3.2 2.2 2.2 3.3-3.2-3 3.2-2.2-2.2Z"/></svg>
+  </a>
+</div>
+
+<script>
+  /* Gạch chân mục nav theo mục đang xem — cùng đoạn script với index.html, chỉ
+     khác một chỗ: ở hero, form và mục "Vì sao chọn" (chưa tới mục nào có trong
+     menu) thì KHÔNG gạch chân mục nào, thay vì mặc định sáng mục đầu. Mục đầu
+     menu ở trang này là "Trang chủ" trỏ ra avory.vn nên không được theo dõi. */
+  (function () {
+    var links = Array.prototype.slice.call(
+      document.querySelectorAll('.nav__menu a[href^="#"]')
+    );
+    var items = [];
+    links.forEach(function (a) {
+      var el = document.getElementById(a.getAttribute('href').slice(1));
+      if (el) items.push({ link: a, section: el });
+    });
+    if (!items.length) return;
+
+    var nav = document.querySelector('.nav');
+
+    function setActive(link) {
+      items.forEach(function (it) {
+        if (it.link === link) it.link.setAttribute('aria-current', 'location');
+        else it.link.removeAttribute('aria-current');
+      });
+    }
+
+    function current() {
+      /* Vạch mốc phải THẤP hơn scroll-margin-top của mục (80px) — nếu không,
+         bấm vào tab sẽ dừng ngay trên vạch và mục trước đó mới là mục sáng. */
+      var line = (nav ? nav.offsetHeight : 0) + 24;
+
+      if (window.innerHeight + window.pageYOffset >= document.body.scrollHeight - 2) {
+        return items[items.length - 1].link;
+      }
+
+      var active = null;
+      items.forEach(function (it) {
+        if (it.section.getBoundingClientRect().top <= line) active = it.link;
+      });
+      return active;
+    }
+
+    var locked = null;
+    var lockTimer = null;
+
+    function unlock() {
+      if (!locked) return;
+      locked = null;
+      clearTimeout(lockTimer);
+      onScroll();
+    }
+
+    var queued = false;
+    function onScroll() {
+      if (queued) return;
+      queued = true;
+      requestAnimationFrame(function () {
+        queued = false;
+        if (locked) {
+          if (current() === locked) {
+            locked = null;
+            clearTimeout(lockTimer);
+          } else {
+            setActive(locked);
+            return;
+          }
+        }
+        setActive(current());
+      });
+    }
+
+    links.forEach(function (a) {
+      a.addEventListener('click', function () {
+        setActive(a);
+        locked = a;
+        clearTimeout(lockTimer);
+        lockTimer = setTimeout(unlock, 1600);
+      });
+    });
+
+    window.addEventListener('wheel', unlock, { passive: true });
+    window.addEventListener('touchstart', unlock, { passive: true });
+    window.addEventListener('keydown', function (e) {
+      if (e.key.indexOf('Arrow') === 0 || e.key === 'PageUp' ||
+          e.key === 'PageDown' || e.key === 'Home' || e.key === 'End') unlock();
+    });
+
+    window.addEventListener('scroll', onScroll, { passive: true });
+    window.addEventListener('resize', onScroll);
+    onScroll();
+  })();
+
+  /* Parallax cho cụm 3 ảnh polaroid ở hero.
+     Script chỉ ghi MỘT con số: --plx = tiến độ cuộn qua hero, 0 (đầu trang)
+     → 1 (mép dưới hero chạm đỉnh màn hình). Mỗi ảnh tự nhân con số đó với độ
+     sâu riêng (--depth trong chau-au.css) qua thuộc tính `translate`, nên
+     không đụng tới `transform` đang giữ góc nghiêng và hiệu ứng rê chuột.
+     Ở đầu trang --plx = 0 → bố cục y như bản tĩnh. Người dùng bật "giảm
+     chuyển động" thì không chạy. */
+  (function () {
+    var group = document.querySelector('.ehero__snaps');
+    var hero = document.querySelector('.ehero');
+    if (!group || !hero) return;
+    if (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+
+    var last = -1;
+    var queued = false;
+
+    function update() {
+      queued = false;
+      /* Mép dưới hero tính theo trang. Không dùng offsetTop: hero nằm trong
+         .eintro (position: relative) nên offsetTop tính từ .eintro, hụt mất
+         chiều cao thanh nav. */
+      var end = hero.getBoundingClientRect().bottom + window.pageYOffset;
+      var p = Math.min(Math.max(window.pageYOffset / end, 0), 1);
+      p = Math.round(p * 1000) / 1000;
+      if (p === last) return;                                /* đã qua hero: thôi ghi */
+      last = p;
+      group.style.setProperty('--plx', p);
+    }
+    function onScroll() {
+      if (queued) return;
+      queued = true;
+      requestAnimationFrame(update);
+    }
+
+    window.addEventListener('scroll', onScroll, { passive: true });
+    window.addEventListener('resize', onScroll);
+    update();
+  })();
+</script>
+
+</body>
+</html>

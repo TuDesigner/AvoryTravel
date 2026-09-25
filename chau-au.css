@@ -1,0 +1,1255 @@
+/* ==========================================================================
+   Avory Travel — Landing page tour Châu Âu · New Zealand · Úc (chau-au.html)
+   Nạp SAU base.css và visa.css — hai file đó dùng NGUYÊN, không sửa dòng nào.
+   Toàn bộ token (màu, bo góc, bóng, nhịp mục) lấy từ :root của base.css;
+   các thành phần có sẵn (.btn, .field, .vform__grid, .merit, .dcard, .ptable,
+   .steps, .qa, .finale, .pcard, footer, nút nổi) dùng lại y nguyên.
+   File này chỉ thêm những thứ trang này mới có.
+   ========================================================================== */
+
+/* --------------------------------------------------------------------------
+   0. Bổ sung cho thành phần dùng chung
+   -------------------------------------------------------------------------- */
+/* Mép trên mục dừng dưới thanh nav dính. visa.css đã lo #bang-gia, #quy-trinh,
+   #lien-he; đây là các mục mới. Phải NHỎ hơn vạch mốc trong JS (nav + 24px). */
+#dang-ky,
+#chau-au,
+#dai-duong,
+#visa-dich-vu,
+#cam-nang { scroll-margin-top: 80px; }
+
+/* Nhãn nhỏ phía trên tiêu đề mục. File nội dung viết hoa sẵn vế đầu —
+   "HÀNH TRÌNH TINH HOA - Tour Châu Âu…" — nên tách vế đó ra làm nhãn.
+   Cùng công thức chữ với .dcard__flag, chỉ lớn hơn một chút. */
+.kicker {
+  font-size: 12.5px;
+  font-weight: 700;
+  letter-spacing: .16em;
+  text-transform: uppercase;
+  text-align: center;
+  color: var(--orange);
+}
+
+/* Thanh nav: chữ nhỏ đi ~1px để 6 mục menu (index.html chỉ 5) + hotline + nút
+   không trông chật. base.css/visa.css để menu 15px, hotline 15px, nút 14,5px —
+   giữ nguyên hai file đó, chỉ ghi đè ở trang này. Bọc trong min-width: 761px:
+   dưới mốc đó menu đã ẩn và visa.css có cỡ riêng cho nút (13,5px), để trần
+   thì rule này đè mất cỡ mobile. */
+@media (min-width: 761px) {
+  .nav__menu a { font-size: 14px; letter-spacing: .1px; }
+  .nav__hotline { font-size: 14px; }
+  .nav__cta { font-size: 13.5px; }
+}
+/* base.css hạ menu xuống 14px từ 1024px; ở trang này 14px đã là cỡ desktop
+   nên hạ tiếp nửa bậc cho dải 961–1024 (menu còn hiện) */
+@media (min-width: 761px) and (max-width: 1024px) {
+  .nav__menu a { font-size: 13.5px; }
+}
+
+/* Dòng liên hệ thứ 2, 3 trong footer (email, website) xếp sát dòng địa chỉ */
+.footer__address + .footer__address { margin-top: 12px; }
+.footer__address a:hover { color: var(--white); }
+
+/* --------------------------------------------------------------------------
+   1. Hero — banner tối tràn bề ngang, chữ sáng nằm thẳng trên ảnh
+   Ảnh banner (Dinan chạng vạng) phủ kín hero; cụm 3 ảnh polaroid nằm
+   giữa-phải, trôi parallax khi cuộn. (Mảng xanh cong góc dưới phải của ảnh
+   tham khảo đã bỏ theo yêu cầu, kèm dòng lịch khởi hành trên nó.)
+   Lần sửa 21: bỏ lớp phủ kem mờ dần trái → phải; cột chữ đổi sang tông tối
+   theo đúng công thức hero index.html (.vhero): tiêu đề trắng, dòng phụ
+   --white-80, vế đậm trắng đặc, nút phụ .btn--ghost.
+   -------------------------------------------------------------------------- */
+
+/* ---- Lưới bọc hero + form: để ảnh banner xuống tới GIỮA thẻ form ----
+   Ảnh không còn nằm trong .ehero (hero kết thúc thì ảnh cũng hết), mà nằm
+   trong .eintro bọc cả hero lẫn khối form. Năm hàng:
+     a  auto        hero trừ phần bị thẻ form chồng lên
+     b  --lap       phần thẻ form chồng lên hero (112px, trước đây là margin âm)
+     c  1fr ┐       hai hàng bằng nhau — phần còn lại của thẻ form
+     d  1fr ┘
+     e  --lap       bằng hàng b
+   Hero chiếm a–b, thẻ form chiếm b–e. Vì b = e và c = d, mép dưới hàng c
+   rơi ĐÚNG giữa chiều cao thẻ form: (--lap + c) = (--lap + c + d + --lap) / 2.
+   Ảnh chiếm a–c nên đáy ảnh luôn nằm giữa thẻ, dù thẻ cao 547px (khổ 1440)
+   hay cao hơn ở màn ≥1500px (form giãn nhịp) — không cần JS đo. */
+.eintro {
+  --lap: 112px;
+  /* Ba bề ngang dùng chung giữa lưới hero và lưới thẻ form, để dải ưu đãi +
+     hàng cam kết ở hero kéo tới đúng đường ranh "ảnh | form" của thẻ bên dưới
+     (xem --snap-w ở .ehero__copy). Đổi một con số là cả hai nơi đổi theo. */
+  --art-col: 440px;    /* cột cụm polaroid ở hero */
+  --hero-gap: 48px;    /* khe giữa cột chữ và cột ảnh */
+  --form-col: 620px;   /* cột form trong thẻ đặt tour */
+  position: relative;
+  isolation: isolate;
+  /* chặn tràn ngang (lưới an toàn); chỉ trục ngang để không cắt bóng đổ ở đáy thẻ form */
+  overflow-x: clip;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  grid-template-rows: auto var(--lap) 1fr 1fr var(--lap);
+}
+/* Ảnh đặt tuyệt đối trong vùng lưới a–c: vừa khớp đúng vùng đó, vừa không
+   góp kích thước vào hàng (ảnh có height="1284" sẽ kéo giãn lưới).
+   <picture> bọc ngoài (để đổi sang bản cắt ở ≤1024px) phải display: contents:
+   grid-area chỉ áp cho phần tử tuyệt đối là CON TRỰC TIẾP của lưới — để
+   <picture> tạo hộp thì ảnh phủ cả .eintro, tràn xuống hết thẻ form. */
+.eintro__pic { display: contents; }
+.eintro__bg {
+  position: absolute;
+  grid-area: 1 / 1 / 4 / 2;
+  /* Ảnh phủ TRỌN bề ngang (lần sửa 21), cột chữ nằm thẳng trên ảnh.
+     Ảnh (lần sửa 31): thung lũng sông New Zealand — trời mây sáng ở ~40% trên
+     (y 0–540 ảnh gốc 2000×1378, tương phản chữ xanh logo 4–7,4:1), dãy núi
+     (y ~495–600), rừng thông + đồng cỏ, sông uốn khúc phía dưới. Trời sáng nên
+     cụm chữ màu tối (tiêu đề xanh logo, dòng phụ --ink) như lần sửa 30.
+     Desktop: khung ~1440×1072 cao hơn tỉ lệ ảnh → "cover" theo chiều cao
+     (×0,78), hiện trọn chiều dọc: cụm tiêu đề ở dòng 245–488 ảnh gốc = trọn
+     trong trời, ngay trên dãy núi; dải ưu đãi + hai nút trên rừng/đồng cỏ;
+     khúc sông uốn nằm ở cột phải (chỗ cụm polaroid đang tạm ẩn), lộ trên thẻ
+     form. Không cần bản cắt riêng như ảnh La Haye (lần sửa 30). */
+  /* Kích thước PHẢI ghi rõ. <img> là phần tử thay thế: đặt tuyệt đối với
+     width/height: auto thì nó KHÔNG giãn theo left/right/top/bottom mà lấy
+     theo tỉ lệ ảnh — bản cũ vì vậy tràn quá mép phải ở 1440px và hụt ở 1920px.
+     Ghi 100% × 100% vùng lưới thì ảnh luôn phủ đúng từ đỉnh hero tới giữa thẻ
+     form; object-fit: cover lo phần cắt. */
+  inset: 0;
+  z-index: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  /* 30% dọc chỉ có tác dụng ở màn rộng (>~1500px: ảnh phóng theo bề ngang,
+     dư chiều cao): giữ dãy núi ngay dưới dòng phụ như ở 1440px — neo đỉnh (0)
+     thì ở 1920 / 2560px núi tụt xuống 476 / 636px, khoảng trời trống giữa cụm
+     chữ và núi rộng hẳn. */
+  object-position: 50% 30%;
+}
+/* Hai lớp phủ trên ảnh banner, lớp trên ghi trước:
+   1. Mép dưới ảnh tan ngắn vào nền trang (lần sửa 30) — mép này nằm ngang giữa
+      thẻ form (desktop) / ngay dưới mép trên thẻ form (≤1024px), lộ ra ở hai
+      lề cạnh thẻ. Chỉ 110px cuối nên không ăn vào phần ảnh phía trên.
+   2. Lớp trắng mờ dần "soft white gradient 01.svg" (lần sửa 32, file khách
+      dựng bằng Illustrator): trắng đặc ở mép trên → trong suốt ở 80% chiều
+      cao, để nâng nền trời sau cụm chữ tối. Phải dùng background-size: cover
+      (không phải 100% 100%): SVG có viewBox 1,95:1 + preserveAspectRatio mặc
+      định (meet) — kéo 100% × 100% thì nó co cho vừa bề ngang, dải trắng không
+      bắt đầu từ mép trên. cover + neo trên thì dải trắng luôn phủ trọn chiều
+      cao khung (khung hẹp hơn 1,95:1) hoặc dài hơn chút (màn rất rộng).
+   (Lần sửa 29 lớp này là trời tối dần xanh đêm cho ảnh Auckland.) */
+.eintro::before {
+  content: "";
+  position: absolute;
+  grid-area: 1 / 1 / 4 / 2;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  background:
+    linear-gradient(180deg,
+      rgba(250, 247, 242, 0) calc(100% - 110px),
+      var(--page-bg) 100%),
+    url("assets/soft%20white%20gradient%2001.svg") center top / cover no-repeat;
+}
+
+.ehero {
+  /* Cụm polaroid thò xuống dưới đáy cột ảnh bấy nhiêu; cột chữ (desktop) kéo
+     đáy xuống đúng bằng ngần ấy để hai nút bám mép dưới cụm — xem .ehero__copy */
+  --snap-drop: 40px;
+  /* Lề trên hero — desktop dùng lại để canh giữa cụm tiêu đề (xem .ehero__sub
+     trong @media min-width 1025px), nên khai báo thành biến */
+  --hero-pt: 96px;
+  grid-area: 1 / 1 / 3 / 2;
+  position: relative;
+  z-index: 2;
+  /* Đáy dư 208px: thẻ form (hàng b) chồng vào 112px cuối, còn hở 96px — bằng
+     đúng lề trên, hai đầu cân nhau. (Bản trước 64 / 176, khách thấy chật.) */
+  padding: var(--hero-pt) 0 208px;
+  overflow: hidden;
+}
+
+/* Đường bay nét đứt, chạy dọc lề trái. Chỉ hiện khi lề đủ rộng (≥1400px):
+   đặt trong vùng chữ thì nó cắt ngang dòng cam kết và hai nút. */
+.ehero__route {
+  display: none;
+  position: absolute;
+  left: 14px;
+  top: 150px;
+  width: 62px;
+  height: auto;
+  fill: none;
+  stroke: var(--green);
+  stroke-opacity: .3;
+  stroke-width: 1.6;
+  stroke-dasharray: 5 7;
+  stroke-linecap: round;
+}
+.ehero__route .plane {
+  fill: var(--green);
+  fill-opacity: .45;
+  stroke: none;
+}
+@media (min-width: 1400px) {
+  .ehero__route { display: block; }
+}
+
+/* Cột ảnh 440px (cụm polaroid rộng 420px, không còn huy hiệu giá) để cột chữ
+   đủ rộng cho dòng 2 tiêu đề — xem .ehero__title. */
+.ehero__grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, var(--art-col));
+  gap: var(--hero-gap);
+  align-items: center;
+}
+/* Cột chữ là container để cỡ tiêu đề tính theo chính bề ngang của nó */
+.ehero__copy { container-type: inline-size; }
+
+/* Desktop: cột chữ chia hai cụm và "bám" vào cụm polaroid (lần sửa 8).
+   - Cột chữ giãn hết chiều cao hàng (stretch) rồi kéo đáy xuống thêm
+     --snap-drop, nên đáy cột = đáy cụm polaroid (cụm cũng thò xuống đúng
+     --snap-drop dưới cột ảnh).
+   - Cụm 2 (ưu đãi → nút) đẩy xuống đáy bằng margin-top: auto → mép dưới hai
+     nút thẳng hàng mép dưới ảnh Iceland.
+   - Cụm 1 (tiêu đề + mô tả) CANH GIỮA DỌC giữa đỉnh hero (mép dưới thanh nav)
+     và mép trên dải ưu đãi (lần sửa 24). Trước đây cụm 1 đứng cố định 72px
+     dưới đỉnh cột chữ, mọi khoảng dư dồn xuống dưới: ở 1440px trên 166px,
+     dưới 215,6px. Nay tiêu đề cũng margin-top: auto — hai lề auto (trên tiêu
+     đề, trên dải ưu đãi) chia đôi khoảng dư. Phần cố định hai bên cũng phải
+     bằng nhau: trên là lề hero --hero-pt (96px), dưới là margin-bottom của
+     mô tả = --hero-pt − 8px. 8px bù chênh lệch giữa hộp dòng và nét chữ thật:
+     hộp chữ tiêu đề nhô 2px lên trên hộp dòng (Inter cao 1,21em > line-height
+     1,15), còn hộp dòng mô tả dư 5,8px dưới nét chữ (line-height 1,75). Đo
+     theo nét chữ thật (Range.getClientRects), khoảng trên = khoảng dưới.
+   Từ 1024px xuống hero xếp dọc, không có cột ảnh cạnh bên để bám. */
+@media (min-width: 1025px) {
+  .ehero__grid { align-items: stretch; }
+  .ehero__copy {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: calc(-1 * var(--snap-drop));
+  }
+  /* thêm .ehero__copy phía trước: khối này nằm TRÊN rule gốc .ehero__offer
+     { margin-top: 36px } trong file, cùng độ ưu tiên thì rule gốc thắng */
+  .ehero__copy .ehero__title { margin-top: auto; }
+  .ehero__copy .ehero__sub { margin-bottom: calc(var(--hero-pt) - 8px); }
+  .ehero__copy .ehero__offer { margin-top: auto; }
+
+  /* Dải ưu đãi + hàng cam kết kéo tới ĐÚNG đường ranh "ảnh | form" của thẻ
+     đặt tour ngay bên dưới (lần sửa 10). Cột chữ và thẻ form cùng bắt đầu ở
+     mép trái container, nên bề ngang cần = container − cột form
+     = cột chữ + cột ảnh + khe − cột form. 100% ở đây là bề ngang cột chữ.
+     Ở 1440px: 760 + 440 + 48 − 620 = 628px (trước: 560px / theo nội dung). */
+  .ehero__copy { --snap-w: calc(100% + var(--art-col) + var(--hero-gap) - var(--form-col)); }
+  .ehero__copy .ehero__offer { max-width: none; width: var(--snap-w); }
+  /* Ba mục trải đều hết bề ngang đó: khoảng hở giữa các mục tự giãn
+     (space-between) để mục cuối chạm đúng đường ranh. Đổi sang flex + wrap:
+     màn hẹp không đủ chỗ cho 3 mục (hở tối thiểu 24px) thì mục thứ ba tự
+     xuống hàng — không cần mốc responsive riêng như bản grid trước. */
+  .ehero__copy .ehero__perks {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    column-gap: 24px;
+    width: var(--snap-w);
+  }
+}
+
+/* ---- cột chữ ---- */
+/* Cùng công thức với .vhero__title của index.html: 800, viết hoa bằng CSS
+   (markup giữ chữ thường để trình đọc màn hình đọc thành câu), chữ trắng trên
+   ảnh tối (lần sửa 21; trước là xanh trên nền kem). Nhãn "đã mở bán" phía
+   trên đã bỏ (nội dung gộp vào dòng mô tả) nên tiêu đề là phần tử đầu.
+   Bóng chữ rất nhẹ, không thấy thành quầng: chỉ để mép chữ tách khỏi mấy
+   đốm đèn vàng của ảnh — tương phản đo KHÔNG tính phần bóng này. */
+/* Tiêu đề đúng HAI dòng: "CHẠM TRỜI ÂU," / "SỐNG TRỌN TỪNG KHOẢNH KHẮC".
+   Dòng 2 (26 ký tự hoa, 800) đo được rộng 17,17 × cỡ chữ — ở 52px là 909px,
+   gấp rưỡi cột chữ cũ (592px). Nên cỡ chữ không cố định nữa mà tính theo bề
+   ngang cột (đơn vị cqi của container .ehero__copy): 100cqi / 17,6 (chừa ~2%)
+   thì dòng 2 luôn vừa khít một dòng, trần 48px. Ở 1440px cột 760px → ~43px.
+   letter-spacing về 0: tracking .012em cũ cộng thêm ~16px cho dòng 2. */
+.ehero__title {
+  margin-top: 0;
+  font-size: clamp(28px, 100cqi / 17.6, 48px);
+  font-weight: 800;
+  line-height: 1.15;
+  text-transform: uppercase;
+  letter-spacing: 0;
+  /* Lần sửa 30 (ảnh La Haye, trời sáng): dòng 1 "CHẠM TRỜI ÂU," màu xanh logo
+     (--green, đúng màu chữ AVORY trên logo); dòng 2 giữ cam .brand. Bỏ bóng
+     chữ tối của bản ảnh đêm — trên trời sáng nó thành quầng bẩn. */
+  color: var(--green);
+}
+.ehero__title .brand { white-space: nowrap; }
+/* Nhịp dọc cột chữ (lần sửa 6 — nới rộng theo yêu cầu): tiêu đề → mô tả 28,
+   mô tả → ưu đãi 36, ưu đãi → cam kết 38, cam kết → nút 48. Khoảng cách tăng
+   dần xuống dưới để mắt đọc thành ba cụm: lời chào · thông tin · hành động. */
+.ehero__sub {
+  margin-top: 28px;
+  max-width: 540px;
+  font-size: 17px;
+  line-height: 1.75;
+  /* Lần sửa 30: chữ tối trên trời sáng — --ink cho cả dòng, vế đầu in đậm */
+  color: var(--ink);
+}
+.ehero__sub strong { font-weight: 700; color: var(--ink); }
+/* Dấu • ngăn hai vế của câu subheadline, tô cam cho tách bạch; &nbsp; trước
+   nó giữ dấu ở cuối dòng 1. Vế sau không cho bẻ giữa chừng — xuống dòng thì
+   xuống cả cụm, tránh "Đã mở / bán tour…". */
+.ehero__dot { margin-left: 4px; font-weight: 700; color: var(--orange); }
+.ehero__subNote { white-space: nowrap; }
+/* màn ≤360px: cụm vế sau (~300px ở 15px) rộng hơn cột chữ (288px ở 320), phải cho bẻ */
+@media (max-width: 360px) {
+  .ehero__subNote { white-space: normal; }
+}
+
+/* Dải ưu đãi — nội dung còn chờ AVORY chốt nên giữ viền đứt cam: nhìn là biết
+   chỗ này chưa phải nội dung thật, khó lọt lên production.
+   Trên ảnh tối (lần sửa 21): nền kính mờ tối thay cho nền kem #fff7f4 — nền
+   kem là một mảng sáng chói giữa ảnh đêm. Làm mờ + phủ tối che hẳn mấy đốm
+   đèn phía sau nên chữ nhỏ 13,8px vẫn đọc rõ; trình duyệt không có
+   backdrop-filter thì vẫn còn lớp tối.
+   Phủ tối 60% (trước 50%, lần sửa 23): ẩn hàng cam kết thì dải này tụt xuống
+   ~80px, nằm đúng dải quán đèn vàng — nhãn cam chỉ còn 4,50:1 ở 1440px (chưa
+   tính làm mờ). 60% → 4,92 ở 1440, 4,99 ở 1025.
+   Lần sửa 31 (khách thấy hộp tối quá): đổi sang KÍNH MỜ SÁNG — nền trắng mờ
+   + làm mờ phía sau, hợp với ảnh ngày nắng và cụm chữ tối. Viền đứt cam vẫn
+   giữ (dấu hiệu chỗ chờ nội dung). Nhãn "Ưu đãi đặt sớm" đổi sang xanh logo:
+   chữ cam trên nền sáng không thể đạt 4,5:1 (cam #f37857 tối đa 2,95:1 ngay cả
+   trên nền trắng tuyệt đối, cam đậm #e05f3d ~3,3–3,8) — màu cam vẫn còn ở
+   icon quà và viền đứt. (Bản tối trước: kính .60 → .80 → .85 để nhãn cam đạt.) */
+.ehero__offer {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  max-width: 560px;
+  margin-top: 36px;
+  padding: 11px 16px;
+  border: 1px dashed rgba(224, 95, 61, .6);
+  border-radius: var(--radius-md);
+  background: rgba(255, 255, 255, .78);
+  -webkit-backdrop-filter: blur(10px);
+          backdrop-filter: blur(10px);
+  font-size: 13.8px;
+  line-height: 1.5;
+  color: var(--text-medium);
+}
+.ehero__offer svg {
+  width: 22px; height: 22px;
+  flex: none;
+  fill: none;
+  stroke: var(--orange-dark);
+  stroke-width: 1.7;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+.ehero__offer b { flex: none; font-weight: 700; color: var(--green); }
+.ehero__offerSep { width: 1px; align-self: stretch; flex: none; background: rgba(13, 81, 72, .18); }
+
+/* Ba mục đo được 209 + 176 + 137 = 522px, cột chữ 592px ở khổ 1280 → khoảng
+   hở tối đa ~35px. 32px + nowrap: nới hơn bản cũ (30px) mà không mục nào bị
+   bẻ dòng. Cột hẹp hơn (1201–1290px, còn 498px) thì về 2 cột — xem responsive. */
+/* Lần sửa 22: bỏ nền kính mờ của lần sửa 21 theo yêu cầu, chữ nằm thẳng trên
+   ảnh; khoảng cách với dải ưu đãi trả về 38px như nhịp lần sửa 6 (12px chỉ
+   hợp khi hai mảng cùng là hộp kính). Hàng này nằm đúng dải quán đèn vàng ven
+   sông của ảnh (ở 1440px ảnh chỉ xê dịch ngang được 230px, dời kiểu gì dải đèn
+   vẫn nằm sau hàng này) nên có bóng chữ hai lớp đậm hơn tiêu đề — xem li.
+   Lần sửa 23: markup TẠM ẨN (bọc chú thích trong chau-au.html), CSS để nguyên
+   cho lúc hiện lại. */
+.ehero__perks {
+  display: grid;
+  grid-template-columns: repeat(3, max-content);
+  justify-content: start;
+  gap: 18px 32px;
+  margin-top: 38px;
+  white-space: nowrap;
+}
+.ehero__perks li {
+  display: flex;
+  align-items: center;
+  gap: 11px;
+  font-size: 13.5px;
+  line-height: 1.45;
+  color: var(--white-80);
+  /* lớp sát (3px) viền quanh nét chữ nhỏ cho khỏi nhoè vào đốm đèn, lớp rộng
+     (14px) làm dịu nền quanh cả cụm chữ. Tương phản đo KHÔNG tính bóng này. */
+  text-shadow: 0 1px 3px rgba(4, 14, 20, .7), 0 1px 14px rgba(4, 14, 20, .55);
+}
+.ehero__perks b {
+  display: block;
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--white);
+}
+/* Vòng tròn viền, không nền (lần sửa 18 — trước là đĩa bạc hà đặc như
+   .merit__ico). Viền nằm trong 42px nhờ box-sizing: border-box của base.css
+   nên cỡ vòng và vị trí icon không đổi.
+   Lần sửa 22: vòng + nét icon trắng đặc (trước cam — cam lẫn vào dãy đèn
+   vàng phía sau). Bóng đổ nhẹ theo đúng hình vòng/nét để tách khỏi đốm đèn. */
+.ehero__perkIco {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 42px; height: 42px;
+  flex: none;
+  border: 1.5px solid var(--white);
+  border-radius: 50%;
+  background: none;
+  filter: drop-shadow(0 1px 3px rgba(4, 14, 20, .6));
+}
+.ehero__perkIco svg {
+  width: 20px; height: 20px;
+  fill: none;
+  stroke: var(--white);
+  stroke-width: 1.7;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.ehero__cta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 14px;
+  margin-top: 48px;
+}
+/* Nút "Nhận lịch trình & báo giá" có chấm tròn + icon lịch bên phải, cùng bố
+   cục với nút hotline (lần sửa 19).
+   Lần sửa 30 (ảnh La Haye nắng sáng, chữ hero tối): trở lại nút viền SÁNG
+   .btn--outline — nền trắng đặc, chữ xanh, chấm xanh icon trắng — như trước
+   lần sửa 21. Nút ghost chữ trắng (của bản ảnh tối) nằm trên trời sáng ở
+   tablet/điện thoại chỉ còn ~3:1; nút trắng chữ xanh đọc được trên mọi nền
+   (8,6:1). Đệm 12/12/12/26 thay vì 13/13/13/26 của .btn--lg: nút viền có thêm
+   viền 1px mỗi phía, bớt 1px đệm để hai nút cao bằng nhau đúng 58px. */
+.ehero__cta .btn--outline {
+  padding: 12px 12px 12px 26px;
+  background: var(--white);
+}
+.ehero__cta .btn--outline:hover { background: var(--mint); }
+.ehero__cta .btn--outline .btn__dot { background: var(--green); }
+.ehero__cta .btn--outline .btn__dot svg { stroke: var(--white); }
+
+/* ---- cột phải: huy hiệu giá + cụm polaroid, nằm trên ảnh banner ---- */
+.ehero__art {
+  position: relative;
+  height: 600px;
+}
+
+/* Cụm 3 ảnh polaroid, xếp đúng như ảnh tham khảo (đo trên bản 1346px):
+   cụm bắt đầu ở ~52% bề ngang hero, đáy gần chạm mép thẻ form.
+     New Zealand — sau cùng, lệch trái-trên, ảnh ngang 4:3, nghiêng −4°
+     Úc          — giữa, bên phải, to nhất, ảnh gần vuông, nghiêng +4°
+     Iceland     — trước nhất, dưới-trái, ảnh ngang 16:10, nghiêng +3°,
+                   đè lên đáy ảnh NZ và mép trái ảnh Úc
+   Toạ độ tuyệt đối trong một khung 420 × 340px; màn nhỏ thu cả khung bằng
+   scale() thay vì tính lại từng ảnh. */
+.ehero__snaps {
+  position: absolute;
+  left: 0;
+  bottom: calc(-1 * var(--snap-drop));
+  width: 420px;
+  height: 340px;
+  transform-origin: 0 100%;
+}
+.snap {
+  position: absolute;
+  margin: 0;
+  padding: 8px 8px 0;
+  border-radius: 3px;
+  background: var(--white);
+  box-shadow: 0 18px 30px -16px rgba(10, 44, 39, .55), 0 2px 6px rgba(0, 0, 0, .06);
+  /* Parallax: script cuối chau-au.html ghi --plx (0 → 1, tiến độ cuộn qua
+     hero) lên .ehero__snaps; mỗi ảnh nhân với --depth riêng. Dùng thuộc tính
+     `translate` riêng (không phải transform) nên cộng dồn được với góc nghiêng
+     và hiệu ứng rê chuột đang nằm ở `transform`. Chuyển tiếp .3s cho ảnh trôi
+     theo có độ trễ nhẹ — cảm giác "bồng bềnh" thay vì dính cứng vào thanh cuộn. */
+  translate: 0 calc(var(--plx, 0) * var(--depth, 0px));
+  transition: transform .45s var(--ease-back), translate .3s var(--ease-out);
+  will-change: translate;
+}
+/* height: auto bắt buộc — thuộc tính height="…" trên <img> là chiều cao cứng,
+   thắng aspect-ratio và kéo ảnh dài ra tới 619px. */
+.snap img {
+  width: 100%;
+  height: auto;
+  object-fit: cover;
+  border-radius: 2px;
+}
+/* NZ nằm cao hơn 40px so với bản trước (top 0 → −40): ở top 0, ảnh Iceland
+   (top 138) đè lên 30px đáy thẻ NZ — đúng dải chú thích, chữ "New Zealand"
+   bị che mất. Nay đáy thẻ NZ ≈ 132px, Iceland chỉ chạm góc dưới trái, chú
+   thích lộ trọn. Úc dời lên theo (30 → 0) để giữ độ lệch bậc thang với NZ
+   như ảnh tham khảo (Úc thấp hơn NZ ~40px). Parallax còn kéo NZ trôi lên
+   nhanh hơn Iceland, nên khi cuộn chú thích càng lộ thêm, không bị che lại. */
+.snap--nz { left: 62px; top: -40px; width: 176px; z-index: 1; transform: rotate(-4deg); }
+.snap--nz img { aspect-ratio: 4 / 3; }
+.snap--au { left: 226px; top: 0; width: 192px; z-index: 2; transform: rotate(4deg); }
+.snap--au img { aspect-ratio: 1 / 1.06; object-position: 50% 60%; }
+.snap--is { left: 0; top: 138px; width: 248px; z-index: 3; transform: rotate(3deg); }
+.snap--is img { aspect-ratio: 16 / 10; }
+
+/* Độ sâu parallax (quãng trôi lên khi cuộn hết hero). Ba mức khác nhau nên
+   cụm tách lớp khi cuộn: Úc trôi nhanh nhất, rồi New Zealand, Iceland chậm
+   nhất. Iceland đứng trước và đè lên đáy ảnh NZ — để Iceland trôi nhanh hơn
+   NZ thì nó sẽ phủ kín nhãn "New Zealand"; chậm hơn thì cụm xoè ra, lộ thêm. */
+.snap--nz { --depth: -80px; }
+.snap--au { --depth: -130px; }
+.snap--is { --depth: -45px; }
+/* Chú thích viết tay như ảnh tham khảo — Dancing Script (nạp cùng request
+   Google Fonts với Inter, có bộ ký tự tiếng Việt nên đổi chú thích sang tên
+   có dấu vẫn hiển thị đúng). Hơi nghiêng ngược chiều thẻ cho giống chữ ghi
+   vội bằng bút lên ảnh. */
+.snap figcaption {
+  padding: 7px 0 9px;
+  font-family: "Dancing Script", "Segoe Script", cursive;
+  font-size: 21px;
+  font-weight: 700;
+  line-height: 1.15;
+  text-align: center;
+  color: var(--green);
+  transform: rotate(-2deg);
+}
+
+/* --------------------------------------------------------------------------
+   2. Form tư vấn nhanh — thẻ trắng chồng lên mép dưới hero
+   Hai vùng: ảnh + lời mời | form. Ban đầu dựng ba vùng như ảnh tham khảo
+   (ảnh | lời mời | form) nhưng form cao 547px nên cột lời mời hở một mảng
+   trắng ~250px giữa tiêu đề và dòng bảo mật. Gộp chữ lên ảnh thì cột trái
+   kín, lại cùng công thức với hero của index.html (ảnh + lớp phủ xanh + chữ
+   trắng). Các ô nhập dùng lại .vform__grid + .field của index.html.
+   -------------------------------------------------------------------------- */
+/* Chiếm hàng b–e của lưới .eintro: hàng b (--lap) là phần chồng lên hero,
+   thay cho margin-top âm trước đây. */
+.booking {
+  grid-area: 2 / 1 / 6 / 2;
+  position: relative;
+  z-index: 3;
+}
+.booking__card {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, var(--form-col));
+  overflow: hidden;
+  border-radius: var(--radius-lg);
+  background: var(--white);
+  box-shadow: var(--shadow-float);
+}
+.booking__intro {
+  position: relative;
+  isolation: isolate;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  padding: 40px 40px 38px;
+  overflow: hidden;
+  /* nền dự phòng khi ảnh chưa tải — cùng màu xám đậm với lớp phủ (lần sửa 33) */
+  background: #1f2126;
+  color: var(--white);
+}
+/* Ảnh: cô gái cầm máy ảnh bên hồ Hofvijver, La Haye (ảnh khách gửi, lần sửa
+   33). Lần sửa 34 — khung CHÂN DUNG như ảnh mẫu khách gửi: booking-hague.jpg là
+   vùng cắt 1015×889 quanh cô gái (x 545–1560, y 409–1298 của ảnh gốc
+   2000×1335, giữ nguyên điểm ảnh): đầu ở ~1/5 trên, mái Binnenhof phía sau,
+   thân + máy ảnh + váy xuống đáy. Tỉ lệ 1,14:1 = đúng khung cột trái ở 1440px
+   (628×552) nên ở màn đầy đủ ảnh khít, không cắt thêm; cô đứng giữa vùng cắt
+   nên mốc ngang 50% luôn đặt cô giữa khung. (Bản lần 33 dùng cả ảnh gốc — cô
+   gái nhỏ, lọt thỏm giữa cảnh.) */
+.booking__bg {
+  position: absolute;
+  inset: 0;
+  z-index: -2;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: 50% 30%;
+}
+/* Lớp tối chỉ ở ĐÁY, sau khối chữ (lần sửa 34, khách: "đừng làm tối ảnh quá"):
+   trong suốt hoàn toàn tới 40% chiều cao — mặt cô gái, mái nhà, mặt hồ giữ
+   nguyên độ sáng — rồi đậm nhanh sau khối chữ (tiêu đề bắt đầu ở 54–67% chiều
+   cao khung tuỳ bề ngang). Màu xám đậm trung tính 24 26 30 (lần sửa 33; trước
+   là xanh đậm). Bản lần 33 đậm dần từ đỉnh (.08 → .50 ở 42%), mặt cô đã bị phủ
+   ~50%. */
+.booking__intro::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background: linear-gradient(180deg,
+    rgba(24, 26, 30, 0) 0%,
+    rgba(24, 26, 30, 0) 40%,
+    rgba(24, 26, 30, .6) 56%,
+    rgba(24, 26, 30, .88) 72%,
+    rgba(24, 26, 30, .94) 100%);
+}
+.booking__title {
+  font-size: 28px;
+  font-weight: 800;
+  line-height: 1.25;
+  color: var(--white);
+}
+.booking__sub {
+  margin-top: 12px;
+  font-size: 15.5px;
+  line-height: 1.7;
+  color: var(--white-80);
+}
+.booking__notes {
+  display: grid;
+  gap: 12px;
+  margin-top: 22px;
+  padding-top: 20px;
+  border-top: 1px solid var(--white-20);
+}
+.booking__notes li {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 13.8px;
+  color: var(--white-80);
+}
+.booking__notes svg {
+  width: 18px; height: 18px;
+  flex: none;
+  fill: none;
+  stroke: var(--orange);
+  stroke-width: 1.7;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+.booking__notes a { font-weight: 700; color: var(--white); }
+
+.booking__form { padding: 32px 34px 34px; }
+.booking__form .vform__grid { margin-top: 18px; }
+
+/* Chọn điểm khởi hành: hai radio thật, vẽ lại thành hai viên thuốc */
+.seg {
+  display: flex;
+  gap: 10px;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  min-width: 0;
+}
+.seg input { position: absolute; opacity: 0; pointer-events: none; }
+/* Chấm radio nằm sát mép TRÁI viên thuốc, cách mép trái đúng bằng cách mép
+   trên/dưới. Cả hai khoảng tính từ cùng hai con số: cao viên (--seg-h, gồm
+   viền 1px) và cỡ chấm (--seg-dot) → (44 − 2 − 16) / 2 = 13px mỗi phía.
+   Chữ vẫn canh giữa viên; đệm ngang hai bên = khoảng hở + chấm + 10px nên
+   chữ không bao giờ đè lên chấm, và vì đệm đối xứng nên vẫn giữa thật. */
+.seg label {
+  --seg-h: 44px;
+  --seg-dot: 16px;
+  --seg-inset: calc((var(--seg-h) - 2px - var(--seg-dot)) / 2);
+  position: relative;
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: var(--seg-h);
+  padding: 0 calc(var(--seg-inset) + var(--seg-dot) + 10px);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-full);
+  background: var(--page-bg);
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--text-medium);
+  white-space: nowrap;
+  cursor: pointer;
+  transition: border-color .2s ease, background-color .2s ease, color .2s ease;
+}
+.seg label::before {
+  content: "";
+  position: absolute;
+  left: var(--seg-inset);
+  top: 50%;
+  width: var(--seg-dot); height: var(--seg-dot);
+  box-sizing: border-box;
+  border: 1.5px solid var(--muted);
+  border-radius: 50%;
+  background: var(--white);
+  transform: translateY(-50%);
+  transition: border .2s ease;
+}
+.seg input:checked + label {
+  border-color: var(--green);
+  background: var(--mint);
+  color: var(--green);
+}
+.seg input:checked + label::before { border: 5px solid var(--orange); }
+.seg input:focus-visible + label { outline: 3px solid var(--orange); outline-offset: 2px; }
+
+/* --------------------------------------------------------------------------
+   3. Vì sao chọn AVORY — 4 thẻ .merit của index.html, lưới 4 cột
+   -------------------------------------------------------------------------- */
+/* Ngay dưới thẻ form (vốn đã chồng lên hero) mà giữ nguyên 170px thì hở một
+   mảng trống lớn — cùng cách xử lý với ".trust + section" của visa.css. */
+.eintro + section { padding-top: 120px; }
+.merits__grid--4 { grid-template-columns: repeat(4, 1fr); }
+
+/* --------------------------------------------------------------------------
+   4. Hai mục tour — thẻ tour + nút "Xem thêm lịch trình" cuối mục
+   Thẻ tour là .dcard của index.html (ảnh, dải tiêu đề quét cam khi rê chuột,
+   .dcard__meta, .dcard__price, nút .btn--sm), thêm vài phần riêng.
+   -------------------------------------------------------------------------- */
+.tours {
+  --grid-mt: 46px;     /* khoảng cụm tiêu đề → lưới thẻ; banner Châu Âu tính theo nó */
+  padding-top: var(--section-gap);
+}
+.tours .h2 { margin-top: 12px; }
+
+/* ---- Banner sau cụm tiêu đề hai mục tour (lần sửa 25–27) ----
+   Ảnh tràn hai mép màn, từ 72px trên nhãn nhỏ tới 400px lấn xuống thẻ tour
+   (lần sửa 27 — trước 150px; đúng vạch khách vẽ, ngang dòng mô tả trong thẻ),
+   đáy tan dần vào nền trang. Mục Châu Âu: Dresden; mục NZ & Úc: .tours--nz.
+   - Neo vào .tours__head (nhãn + tiêu đề + mô tả) chứ không vào section: đỉnh
+     = đỉnh cụm − 72px, đáy = đáy cụm + khoảng tới lưới + 400px, nên cụm chữ
+     cao/thấp ở màn nào (mô tả 1–3 dòng) banner cũng ôm đúng.
+   - Là <div> bọc <img>: <img> đặt tuyệt đối không giãn theo top + bottom mà
+     lấy theo tỉ lệ ảnh (lỗi từng gặp ở banner hero) — div nhận top/bottom,
+     ảnh bên trong 100% × 100% + object-fit: cover.
+   - Tràn mép: rộng 100vw, canh giữa theo cột chữ. 100vw gồm cả thanh cuộn nên
+     nhô ~8px mỗi bên — section cắt ngang (overflow-x: clip, không tạo khung
+     cuộn, không cắt theo chiều dọc).
+   - z-index −1 trong section cô lập (isolation): vẽ SAU nền section nhưng
+     TRƯỚC chữ và thẻ tour, nên banner nằm dưới cả ảnh thẻ.
+   - Ảnh cắt sẵn đúng tỉ lệ banner ở 1440px (1440 × 675 → 2,13:1, file
+     2000×937): ở 1440px ảnh khít, ≤1440px "cover" theo chiều cao — đỉnh
+     banner luôn là cùng một dòng ảnh gốc, chữ rơi vào đúng những dòng ảnh như
+     nhau. Chỉ màn >1440px (phóng theo bề ngang, dư chiều cao) mới cần
+     object-position dọc — mỗi ảnh một mốc, dò bằng đo tương phản.
+   Ảnh Châu Âu tours-banner.jpg: Dresden lúc chạng vạng (ảnh khách gửi, lần
+   sửa 26), dải y 120–1057 của ảnh gốc 2000×1333. Mốc y 120 để hai ngọn tháp
+   Hofkirche (đỉnh y 415) và Hausmannsturm (y 425) nằm DƯỚI dòng mô tả cuối;
+   Frauenkirche (đỉnh y 310) đứng ở lề trái, ngoài bề ngang chữ; bờ sông lên
+   đèn + bóng nước nằm sau thẻ, lộ ở khe thẻ và hai lề. */
+.tours--banner {
+  --banner-top: 72px;
+  --banner-into: 400px;
+  /* Lớp trời tối dần (xem ::after): màu + 4 mức đậm, mỗi ảnh một bộ */
+  --scrim: 8 16 38;
+  --scrim-a: .65;  --scrim-b: .55;  --scrim-c: .42;  --scrim-d: .2;
+  --scrim-hold: 221px;   /* mốc đặt mức --scrim-d (≈ đáy dòng mô tả ở desktop) */
+  --scrim-end: 264px;
+  --banner-pos: 50% 30%;
+  position: relative;
+  isolation: isolate;
+  overflow-x: clip;
+}
+.tours__head { position: relative; }
+/* Chữ trắng đặc trên ảnh đêm (lần sửa 26): nhãn (vốn cam), tiêu đề (vốn
+   xanh), mô tả (vốn xám) — cả ba --white, không dùng trắng mờ. */
+.tours--banner .tours__head .kicker,
+.tours--banner .tours__head .h2,
+.tours--banner .tours__head .tours__sub { color: var(--white); }
+.tours__banner {
+  position: absolute;
+  z-index: -1;
+  top: calc(-1 * var(--banner-top));
+  bottom: calc(-1 * (var(--grid-mt) + var(--banner-into)));
+  left: calc(50% - 50vw);
+  width: 100vw;
+}
+/* object-position dọc chỉ có tác dụng ở màn >1440px (xem trên). Dresden: 30%
+   — neo đỉnh (0) thì mô tả leo lên vệt mây sáng (1920px còn 4,2:1, 2560px
+   2,4:1), dời quá xa thì hai ngọn tháp đâm vào dòng mô tả. */
+.tours__banner img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: var(--banner-pos);
+}
+/* Hai lớp phủ, lớp trên ghi trước:
+   1. Đáy tan dần vào nền trang: nền trang trong suốt → đặc ở mép dưới, trong
+      45% dưới — đoạn nằm sau ảnh thẻ và khe giữa các thẻ, nên mép banner không
+      là một đường cắt ngang lộ ra ở khe thẻ.
+   2. Trời tối dần lên trên (lần sửa 26), kiểu kính lọc ND chuyển sắc: đậm
+      nhất ở đỉnh, hết hẳn ở 264px — ngay dưới dòng mô tả cuối, trên hàng
+      mái/dãy núi, nên phố lên đèn / biển giữ nguyên. Mốc tính bằng PX từ đỉnh
+      banner (lần sửa 27; trước là % — banner cao thêm 250px thì lớp phủ % sẽ
+      kéo dài xuống theo, phủ tối cả phố ở khe thẻ). Cụm chữ ở mọi màn nằm
+      trong 72–250px đầu nên mốc px khớp mọi bề ngang.
+      Dresden: ảnh phơi sáng dài có vệt mây gần trắng chạy ngang giữa trời,
+      đúng chỗ đặt chữ — chữ trắng trên ảnh trần chỉ 1,6:1 (nhãn, tiêu đề);
+      không cách cắt nào tránh được mà vẫn giữ phố. Màu phủ lấy từ chính ảnh
+      (--scrim), không phải đen, để giữ tông; vệt mây vẫn thấy, chỉ dịu đi.
+      Mức phủ dò trên điểm ảnh sau từng dòng chữ — README lần sửa 26–27. */
+.tours__banner::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(180deg,
+      rgba(250, 247, 242, 0) 0,
+      rgba(250, 247, 242, 0) 55%,
+      var(--page-bg) 100%),
+    linear-gradient(180deg,
+      rgb(var(--scrim) / var(--scrim-a)) 0,
+      rgb(var(--scrim) / var(--scrim-b)) 85px,
+      rgb(var(--scrim) / var(--scrim-c)) 153px,
+      rgb(var(--scrim) / var(--scrim-d)) var(--scrim-hold),
+      rgb(var(--scrim) / 0) var(--scrim-end));
+}
+/* Mục NZ & Úc (lần sửa 27): bờ biển Kaikoura (ảnh khách gửi), dải y 290–1227
+   của ảnh gốc 2000×1333 — trời xanh sau chữ, dãy núi xa (đỉnh tuyết bên phải)
+   chạy ngang ngay trên mép thẻ, biển ngọc + đồi cỏ sau hai thẻ, lộ ở khe giữa
+   và hai lề. Trời trong không vệt mây nhưng nhạt dần về chân trời (chữ trắng
+   trên ảnh trần: ~5:1 ở mép trên ảnh, ~2:1 gần núi) → cũng phủ trời tối dần
+   như mục Châu Âu. Mức phủ + mốc dọc: xem README lần sửa 27–28. */
+.tours--nz {
+  /* Lần sửa 28 (theo yêu cầu): cùng lớp tối dần XANH ĐÊM với mục Châu Âu
+     (8 16 38, đậm trên → nhạt dưới), nhưng đậm hơn vì ảnh sáng hơn:
+     .78 / .72 / .66 / .58 (Châu Âu .65 / .55 / .42 / .20), tan hết ở 310px.
+     Dòng mô tả rơi vào dải trời nhạt sát núi (ảnh trần 1,95:1): dùng y nguyên
+     mức Châu Âu thì mô tả chỉ 2,05:1; bậc .75/.70/.62/.52 (300px) vừa sát
+     ngưỡng 4,67; bậc này 5,58. (Lần sửa 27 dùng lớp xanh lam 0 52 170 — bỏ.) */
+  --scrim: 8 16 38;
+  --scrim-a: .78;  --scrim-b: .72;  --scrim-c: .66;  --scrim-d: .58;
+  --scrim-end: 310px;
+}
+/* Điện thoại: mô tả NZ dài hơn mô tả Châu Âu, 3 dòng kéo xuống tới 246px (đo
+   ở 320px) — quá mốc 221px nơi lớp phủ bắt đầu nhạt, dòng cuối còn 3,99:1.
+   Giữ đậm tới 260px thì 5,18:1. Chỉ ở ≤760px: desktop giữ nguyên để đỉnh núi
+   ngay trên mép thẻ không bị phủ tối thêm. */
+@media (max-width: 760px) {
+  .tours--nz { --scrim-hold: 260px; --scrim-end: 340px; }
+}
+.tours__sub {
+  max-width: 680px;
+  margin-inline: auto;
+  text-align: center;
+}
+
+/* Châu Âu: 3 thẻ hàng trên, 2 thẻ hàng dưới rộng hơn. Lưới 6 cột: thẻ hàng
+   trên chiếm 2 cột (397px ở khổ 1280 — đúng cỡ thẻ nhỏ của index.html), thẻ
+   hàng dưới chiếm 3 cột (610px). Châu Đại Dương (--duo): 2 thẻ, mỗi thẻ 3 cột,
+   cùng khổ với hàng dưới của Châu Âu.
+   Grid thay cho flex của .dest__grid; rule flex-basis của .dcard trong
+   visa.css không có tác dụng trong grid nên không cần gỡ. */
+.tours__grid {
+  display: grid;
+  grid-template-columns: repeat(6, minmax(0, 1fr));
+  gap: 28px;
+  margin-top: var(--grid-mt);
+  align-items: stretch;
+}
+.tours__grid > .tcard { grid-column: span 2; }
+.tours__grid > .tcard:nth-child(n + 4),
+.tours__grid--duo > .tcard { grid-column: span 3; }
+
+/* Ảnh cao CỐ ĐỊNH 224px thay cho tỉ lệ 16:9: thẻ hàng dưới rộng 610px, giữ
+   16:9 thì ảnh cao 343px và hàng dưới cao hơn hàng trên ~120px. Cố định chiều
+   cao thì hai hàng cùng nhịp (như ảnh bố cục khách gửi: ô dưới rộng hơn, cùng
+   chiều cao); thẻ rộng chỉ lấy dải ảnh toàn cảnh hơn. 224 = 16:9 của 397px. */
+.tcard .dcard__media { aspect-ratio: auto; height: 224px; }
+
+.tours__more { margin-top: 44px; text-align: center; }
+
+/* ---- thẻ tour ---- */
+/* Nhãn trên ảnh (lần sửa 13): chữ mảnh (300) và nhỏ hơn; nền ĐEN, hoà trộn
+   darken, độ mờ 80% — cùng một kiểu cho mọi thẻ (bỏ biến thể cam --hot).
+
+   Cách dựng: hoà trộn chỉ áp lên NỀN, không lên chữ. Đặt mix-blend-mode ngay
+   trên .tcard__tag thì chữ trắng cũng bị darken → min(trắng, ảnh) = ảnh, chữ
+   biến mất. Nên nền là ::before (đen, opacity .8, darken) và chữ nằm trong
+   <span> con có position: relative để vẽ SAU lớp nền.
+   Nhãn cố ý KHÔNG có z-index: tạo stacking context thì ::before chỉ hoà trộn
+   với chính nhãn (nhóm cô lập) chứ không với ảnh bên dưới.
+   Ghi chú: đen + darken cho kết quả y như đen thường (min(0, x) = 0) —
+   giữ darken đúng như yêu cầu thiết kế. */
+.tcard__tag {
+  position: absolute;
+  top: 14px;
+  left: 14px;
+  max-width: calc(100% - 28px);
+  padding: 5px 11px;
+  border-radius: var(--radius-full);
+  font-size: 10.5px;
+  font-weight: 300;
+  letter-spacing: .1em;
+  line-height: 1.4;
+  text-transform: uppercase;
+  color: var(--white);
+}
+.tcard__tag::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: #000;
+  opacity: .3;          /* .8 ban đầu — khách thấy tối quá */
+  mix-blend-mode: darken;
+}
+.tcard__tag > span { position: relative; }
+/* Khung ảnh là nhóm hoà trộn: nền nhãn hoà với ảnh trong khung. isolation
+   bắt buộc — trang chủ Avory từng bị Browser pane bỏ trắng cả panel khi dùng
+   blend mode mà thiếu isolation. */
+.tcard .dcard__media { isolation: isolate; }
+
+.tcard__desc {
+  margin-top: 12px;
+  font-size: 14px;
+  line-height: 1.7;
+  color: var(--primary);
+}
+.tcard .dcard__meta { margin-top: 18px; }
+.tcard .dcard__meta dd { line-height: 1.55; }
+
+/* Chân thẻ xếp DỌC: giá một hàng, điều kiện đoàn + nút một hàng. Giá dạng
+   khoảng ("125.900.000 – 128.900.000đ") rộng tới ~320px, xếp ngang với nút thì
+   thẻ nào cũng phải xuống dòng một kiểu — xếp dọc cho mọi thẻ cùng một nhịp. */
+.tcard .dcard__foot {
+  flex-direction: column;
+  align-items: stretch;
+  gap: 0;
+  padding-top: 22px;
+}
+.tcard__row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-top: 16px;
+  padding-top: 16px;
+  border-top: 1px solid var(--card-border);
+}
+.tcard__group {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  font-size: 13px;
+  color: var(--muted);
+}
+.tcard__group svg {
+  width: 17px; height: 17px;
+  flex: none;
+  fill: none;
+  stroke: var(--orange);
+  stroke-width: 1.7;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+/* ---- thẻ cao cấp (Iceland): nền xanh đậm, chữ sáng ----
+   Cam #f37857 trên --green-deep đạt 4,53:1 nên nhãn cam và giá vẫn đạt AA. */
+.tcard--premium { background: var(--green-deep); }
+.tcard--premium h3,
+.tcard--premium .tcard__desc,
+.tcard--premium .dcard__meta dd { color: var(--white); }
+.tcard--premium .dcard__note,
+.tcard--premium .dcard__price small,
+.tcard--premium .tcard__group { color: var(--white-70); }
+.tcard--premium .dcard__meta dt { color: var(--white-60); }
+.tcard--premium .tcard__row { border-top-color: var(--white-12); }
+
+/* --------------------------------------------------------------------------
+   5. Bảng giá — .pricing / .ptable của index.html, thêm cột và nhóm khu vực
+   -------------------------------------------------------------------------- */
+/* Chia cột theo nội dung thật. Từ lần sửa 16 giá dạng khoảng xuống 2 dòng
+   ("từ #" / "đến #"), cột giá chỉ cần ~150px thay vì 209px cho một dòng dài
+   → nhường bớt cho cột khu vực, nơi chữ nay to gấp đôi. Tiêu đề "THỜI GIAN"
+   cần 73px; bảng rộng ≥ 1220px (min-width) — hẹp hơn thì cuộn ngang như
+   index.html thay vì bóp cột. */
+.ptable--tours { min-width: 1220px; table-layout: fixed; }
+.ptable--tours thead th:nth-child(1) { width: 15%; }
+.ptable--tours thead th:nth-child(2) { width: 26%; }
+.ptable--tours thead th:nth-child(3) { width: 9%; }
+.ptable--tours thead th:nth-child(4) { width: 16%; }
+.ptable--tours thead th:nth-child(5) { width: 19%; }
+.ptable--tours thead th:nth-child(6) { width: 15%; }
+.ptable--tours td b { font-weight: 700; color: var(--primary); }
+
+/* Ô khu vực gộp dòng (lần sửa 16–17): bỏ viên thuốc, chữ to gấp rưỡi chữ nội
+   dung (1.5em của 14,4px = 21,6px — ăn theo cỡ chữ bảng; bản gấp đôi 28,8px
+   khách thấy to quá), canh giữa theo chiều dọc của cả cụm dòng thuộc khu vực
+   đó. "Châu Đại Dương" ngắt bằng <br> thành "Châu / Đại Dương" cho khỏi tách
+   đôi cụm "Đại Dương" (một dòng cần ~166px, ô chỉ 147px). */
+.ptable--tours tbody th { vertical-align: middle; }
+.region {
+  display: block;
+  font-size: 1.5em;
+  font-weight: 800;
+  line-height: 1.15;
+  letter-spacing: -.01em;
+  color: var(--green);
+}
+/* Ô gộp dòng của nhóm cuối không nằm trong <tr> cuối, nên rule "tr:last-child
+   bỏ vạch" của visa.css không với tới — tự bỏ ở đây. */
+.ptable--tours .ptable__group th { border-bottom: 0; }
+/* vạch đậm hơn ngăn hai khu vực */
+.ptable--tours .ptable__group > * { border-top: 2px solid var(--mint-deep); }
+/* Giá dạng khoảng: hai dòng "từ #" / "đến #", CHỈ con số đậm. Ô .num vốn
+   đậm 800 (visa.css) nên chữ "từ"/"đến" hạ về 400, màu chữ thường. Canh phải
+   nên hai con số thẳng mép phải với nhau và với các giá một số. */
+.ptable .rng { font-weight: 400; color: var(--text-medium); }
+.ptable--tours .num { line-height: 1.7; }
+
+/* --------------------------------------------------------------------------
+   6. Cam kết của AVORY — khối bạc hà, lời dẫn bên trái, 4 cam kết bên phải
+   -------------------------------------------------------------------------- */
+.pledge { padding-top: var(--section-gap); }
+.pledge__box {
+  display: grid;
+  grid-template-columns: minmax(0, 5fr) minmax(0, 7fr);
+  gap: 56px;
+  align-items: center;
+  padding: 56px;
+  border-radius: var(--radius-xl);
+  background: var(--mint);
+}
+.pledge .h2 { margin-top: 0; }
+.pledge__intro .lead { margin-top: 16px; }
+.pledge__intro .btn { margin-top: 30px; }
+
+/* 4 cam kết là thẻ .merit của visa.css (lần sửa 15) — ở đây chỉ còn lưới
+   2 × 2. Không định kiểu lại thẻ: kiểu desktop (đĩa icon phía trên), kiểu
+   mobile (icon + tiêu đề chung dòng) và hover (nhấc 8px, viền cam, đĩa cam)
+   đều lấy nguyên từ .merit. Khe 20px = .merits__grid. */
+.pledge__list {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  grid-auto-rows: 1fr;
+  gap: 20px;
+}
+
+/* --------------------------------------------------------------------------
+   7. Visa & dịch vụ tự túc — thẻ .pcard của index.html, lưới 4 cột
+   -------------------------------------------------------------------------- */
+.services { padding-top: var(--section-gap); }
+.services .h2 { margin-top: 0; }
+.services__sub {
+  max-width: 680px;
+  margin-inline: auto;
+  text-align: center;
+}
+.services__grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 20px;
+  margin-top: 46px;
+  align-items: stretch;
+}
+
+/* --------------------------------------------------------------------------
+   8. CTA cuối trang — .finale của index.html, bản căn giữa không kèm form
+   -------------------------------------------------------------------------- */
+.finale--center { padding: 116px 0 120px; text-align: center; }
+/* chữ nằm giữa khung nên lớp phủ phải đều hai bên, không đậm trái nhạt phải */
+.finale--center::after {
+  background: linear-gradient(180deg, rgba(10, 44, 39, .80) 0%, rgba(10, 44, 39, .88) 100%);
+}
+.finale--center .h2 { margin-top: 0; }
+.finale--center .finale__sub { max-width: 560px; margin-inline: auto; }
+.finale__actions {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 14px;
+  margin-top: 34px;
+}
+
+/* --------------------------------------------------------------------------
+   9. Hover — chỉ trên thiết bị có chuột thật
+   -------------------------------------------------------------------------- */
+@media (hover: hover) and (pointer: fine) {
+  /* rê chuột vào cụm polaroid: ba ảnh xoè nhẹ ra */
+  .ehero__snaps:hover .snap--nz { transform: translate(-8px, -8px) rotate(-7deg); }
+  .ehero__snaps:hover .snap--au { transform: translate(10px, -4px) rotate(7deg); }
+  .ehero__snaps:hover .snap--is { transform: translate(-8px, 6px) rotate(1deg); }
+}
+
+/* --------------------------------------------------------------------------
+   10. Responsive — cùng các mốc 1200 / 1024 / 760 / 480 của visa.css
+   -------------------------------------------------------------------------- */
+
+/* Menu ở đây có 6 mục (index.html chỉ 5) nên thanh nav chật sớm hơn. Đo
+   được: logo 105 + menu 709 + hotline & CTA 316 = 1130px, trong khi ở 1210px
+   chỉ còn 18px hở giữa menu và cụm nút, ở 1030px thì tràn 17px. Hai bước:
+   ≤1280px ẩn số hotline (giữ icon, vẫn bấm gọi được); ≤1100px ẩn "Trang chủ"
+   — logo vốn đã trỏ về avory.vn nên không mất lối nào. */
+@media (max-width: 1280px) {
+  .nav__hotline span { display: none; }
+}
+@media (max-width: 1100px) {
+  .nav__menu li:first-child { display: none; }
+}
+
+@media (max-width: 1200px) {
+
+  .ehero__art { height: 580px; }
+
+  .eintro { --form-col: 540px; }
+  .booking__intro { padding: 34px 30px 32px; }
+  .booking__title { font-size: 25px; }
+
+  /* Lưới tour về 2 cột ngay từ 1200px chứ không đợi 1024 như .dest__grid:
+     3 cột ở 1025px chỉ còn thẻ 307px, hàng "đoàn ghép + nút" hụt tới 48px. */
+  .tours__grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .tours__grid > .tcard,
+  .tours__grid > .tcard:nth-child(n + 4),
+  .tours__grid--duo > .tcard { grid-column: auto; }
+  /* Châu Âu còn thẻ lẻ thứ 5 (Iceland): trải hết hàng và xếp NGANG — ảnh
+     trái, chữ phải, như thẻ chủ lực .dcard--hero của index.html. Để dọc ở bề
+     ngang 977px thì mỗi dòng chữ dài gần 1000px, rất khó đọc. */
+  .tours__grid > .tcard:last-child:nth-child(odd) { grid-column: 1 / -1; flex-direction: row; }
+  .tours__grid > .tcard:last-child:nth-child(odd) .dcard__media { width: 44%; flex: none; height: auto; }
+
+  .pledge__box { gap: 40px; padding: 44px; }
+}
+
+@media (max-width: 1024px) {
+  /* Xếp dọc: ảnh tối phủ TRỌN hero (lần sửa 21), chữ sáng ở trên, cụm
+     polaroid ở dưới. Bản trước ảnh chỉ là một dải ở đáy với lớp phủ kem trên
+     → dưới; bỏ lớp phủ thì chữ cũng phải nằm trên ảnh như desktop.
+     Ảnh chỉ chiếm vùng hero (hàng a–b), KHÔNG kéo xuống giữa thẻ form như
+     desktop: ở đây thẻ form rộng gần hết màn (lề 16–28px), kéo ảnh xuống sau
+     thẻ chỉ lộ hai dải ảnh mảnh hai bên mép, trông như lỗi.
+     Ảnh ở đây là bản gốc 2000px hero-nz-valley.jpg (<picture> trong HTML,
+     lần sửa 31): khung dọc nên ảnh "cover" theo chiều cao, hiện trọn chiều dọc
+     — cụm chữ + dải ưu đãi trên trời, hai nút trên dãy núi/rừng, ô trống của
+     cụm polaroid (đang ẩn) hiện thung lũng + khúc sông.
+     object-position 80%: khúc sông uốn (x 1320–1800 ảnh gốc) nằm trọn trong
+     khung ở điện thoại (x 99–444 ở 375px); 50–65% thì khúc sông trôi ra ngoài
+     mép phải. Mọi dòng chữ đạt ở 50 / 65 / 80% (dò ở 320 / 375 / 768 / 1024px).
+     Lưu ý: ảnh "cover" theo CHIỀU CAO hero, nên mỗi lần nội dung hero cao/thấp
+     đi (thêm/bớt một hàng) ảnh co giãn lại và mọi dòng chữ trượt sang chỗ
+     khác trên ảnh — phải dò lại. */
+  .eintro { --lap: 96px; }
+  .ehero { padding: 64px 0 172px; }
+  .eintro__bg,
+  .eintro::before { grid-area: 1 / 1 / 3 / 2; }
+  .eintro__bg { object-position: 80% 0; }
+  .ehero__grid { grid-template-columns: 1fr; gap: 40px; }
+  .ehero__sub, .ehero__offer { max-width: none; }
+  .ehero__sub { margin-top: 24px; }
+  .ehero__offer { margin-top: 30px; }
+  .ehero__perks { grid-template-columns: repeat(3, max-content); margin-top: 32px; }
+  .ehero__cta { margin-top: 40px; }
+  .ehero__art { height: 400px; }
+  .ehero__snaps { left: 50%; margin-left: -210px; }
+  .ehero__route { display: none; }
+
+  /* form: khối ảnh + lời mời thành dải ngang phía trên, form xuống dưới */
+  .booking__card { grid-template-columns: 1fr; }
+  .booking__intro { min-height: 320px; padding: 30px 28px 26px; }
+  /* dải ngang rộng (tablet): ảnh "cover" theo bề ngang, dư chiều cao — chọn
+     mốc dọc để mặt cô gái nằm TRÊN khối chữ ở đáy, đỉnh đầu còn chút khoảng
+     thở (27% thì ở 1024px tóc chạm mép trên; dò ở 768 / 1024px) */
+  .booking__bg { object-position: 50% 24%; }
+  .booking__notes { grid-template-columns: repeat(2, auto); justify-content: start; column-gap: 28px; }
+  .booking__form { padding: 26px 28px 30px; }
+
+  .eintro + section { padding-top: 100px; }
+  .merits__grid--4 { grid-template-columns: repeat(2, 1fr); }
+
+  /* Hàng "đoàn ghép + nút" ở thẻ hẹp nhất: lưới 2 cột quanh 768px chỉ còn
+     297px (cần 307), 1 cột ở 375px còn 293px (cần 297–299) — nhãn tự bẻ đôi
+     hoặc nút rơi xuống dòng. Siết chữ, icon, khoảng cách cho vừa một hàng;
+     nowrap giữ nhãn liền một dòng, flex-wrap là lưới an toàn cho màn 320px. */
+  .tcard__row { flex-wrap: wrap; gap: 8px; }
+  .tcard__group { gap: 5px; font-size: 12px; white-space: nowrap; }
+  .tcard__group svg { width: 15px; height: 15px; }
+
+  .pledge__box { grid-template-columns: 1fr; gap: 30px; }
+  .services__grid { grid-template-columns: repeat(2, 1fr); }
+}
+
+/* 6 mục menu không vừa dải 761–960px (index.html chỉ có 5 mục nên chịu được):
+   ẩn menu sớm hơn, giữ logo + hotline + nút CTA như mốc mobile. */
+@media (max-width: 960px) {
+  .nav--lp .nav__menu { display: none; }
+  .nav--lp .nav__inner { justify-content: space-between; }
+}
+
+@media (max-width: 760px) {
+  .eintro { --lap: 84px; }
+  .ehero { padding: 44px 0 144px; }
+  /* Điện thoại: dòng 2 cần ~20px chữ mới vừa một dòng ở màn 375px — quá nhỏ
+     cho tiêu đề chính. Ở đây trả về cỡ cố định và cho dòng 2 xuống dòng. */
+  .ehero__title { font-size: 31px; }
+  .ehero__title .brand { white-space: normal; }
+  .ehero__sub { margin-top: 18px; font-size: 15px; line-height: 1.7; }
+  .ehero__offer { margin-top: 24px; align-items: flex-start; flex-wrap: wrap; row-gap: 4px; font-size: 13px; }
+  .ehero__offerSep { display: none; }
+  .ehero__offer > span:last-child { flex-basis: 100%; }
+  .ehero__perks { grid-template-columns: 1fr; gap: 14px; margin-top: 26px; }
+  .ehero__cta { margin-top: 32px; }
+  .ehero__cta .btn { flex: 1 1 100%; justify-content: center; }
+
+  /* khung cụm polaroid thu theo; cụm giữ nguyên toạ độ, chỉ scale */
+  .ehero__art { height: 300px; }
+  .ehero__snaps { margin-left: -156px; transform: scale(.74); }
+
+  .booking__intro { min-height: 300px; padding: 22px 20px 20px; }
+  /* Điện thoại: khối chữ phủ gần trọn khung (tiêu đề bắt đầu ~30–70px từ mép
+     trên), nằm cả lên vùng trời sáng của ảnh La Haye — lớp xám phải đậm sớm
+     hơn bản desktop (tiêu đề trắng mới chỉ 2,6–2,8:1 với mức desktop). */
+  .booking__intro::after {
+    background: linear-gradient(180deg,
+      rgba(24, 26, 30, .45) 0%,
+      rgba(24, 26, 30, .72) 30%,
+      rgba(24, 26, 30, .9) 60%,
+      rgba(24, 26, 30, .94) 100%);
+  }
+  .booking__title { font-size: 21px; }
+  .booking__sub { font-size: 14.5px; }
+  .booking__notes { grid-template-columns: 1fr; }
+  .booking__form { padding: 20px 20px 24px; }
+  .seg { flex-direction: column; gap: 8px; }
+  /* flex: none bắt buộc: xếp dọc thì "flex: 1" (flex-basis 0) nằm trên trục
+     dọc và đè mất height: 44px — viên thuốc bẹp còn 23px, chấm lệch tâm. */
+  .seg label { flex: none; justify-content: flex-start; }
+  .booking__form .vform__grid { grid-template-columns: 1fr; }
+
+  .eintro + section { padding-top: 84px; }
+  .merits__grid--4 { grid-template-columns: 1fr; }
+
+  .kicker { font-size: 11.5px; }
+  .tours .h2 { margin-top: 10px; }
+  .tours__sub,
+  .services__sub {
+    margin-top: 14px;
+    font-size: 14.5px;
+    line-height: 1.65;
+  }
+  .tours__grid { grid-template-columns: 1fr; gap: 22px; }
+  /* 1 cột: thẻ Iceland quay về xếp dọc, ảnh mọi thẻ trở lại 16:9 */
+  .tours__grid > .tcard:last-child:nth-child(odd) { flex-direction: column; }
+  .tours__grid > .tcard:last-child:nth-child(odd) .dcard__media { width: auto; }
+  .tcard .dcard__media { height: auto; aspect-ratio: 16 / 9; }
+  .tours__more { margin-top: 32px; }
+  /* .btn vốn nowrap; nhãn "Xem thêm lịch trình New Zealand & Úc" rộng hơn
+     màn 320px nên phải cho xuống dòng — cùng cách .pricing__cta của visa.css */
+  .tours__more .btn {
+    width: 100%;
+    justify-content: space-between;
+    white-space: normal;
+    text-align: left;
+    line-height: 1.35;
+  }
+  .tours__more .btn__dot { flex: none; }
+
+  .pledge__box { padding: 28px 18px; border-radius: var(--radius-lg); }
+  /* 1 cột như .merits__grid ở mốc này; thẻ tự chuyển kiểu mobile của .merit */
+  .pledge__list { grid-template-columns: 1fr; grid-auto-rows: auto; }
+  .pledge__intro .btn { width: 100%; justify-content: space-between; }
+
+  .services__grid { grid-template-columns: 1fr; }
+
+  .finale--center { padding: 76px 0 80px; }
+  .finale__actions .btn { flex: 1 1 100%; justify-content: center; }
+}
+
+@media (max-width: 480px) {
+  .ehero__title { font-size: 27px; }
+}
+
+/* Màn 320px: logo 105 + icon hotline + nút "Nhận tư vấn ngay" = 334px, tràn
+   14px và kéo cả trang cuộn ngang. Thu logo và nút lại một chút. */
+@media (max-width: 360px) {
+  .nav__logo { width: 88px; height: 44px; }
+  .nav__actions { gap: 12px; }
+  .nav__cta { gap: 8px; padding: 7px 7px 7px 14px; font-size: 13px; }
+  .nav__cta .btn__dot { width: 24px; height: 24px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  /* base.css chỉ ép transition-duration, không đụng tới animation */
+  .snap { translate: none; }   /* script parallax cũng tự dừng, đây là lưới an toàn */
+  .ehero__snaps:hover .snap--nz { transform: rotate(-4deg); }
+  .ehero__snaps:hover .snap--au { transform: rotate(4deg); }
+  .ehero__snaps:hover .snap--is { transform: rotate(3deg); }
+}
